@@ -19,11 +19,11 @@ class CashierServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerLogger();
-        $this->registerRoutes();
-        $this->registerResources();
+//        $this->registerLogger();
+//        $this->registerRoutes();
+//        $this->registerResources();
         $this->registerPublishing();
-        $this->registerCommands();
+//        $this->registerCommands();
 
         Stripe::setAppInfo(
             'Laravel Cashier',
@@ -40,8 +40,8 @@ class CashierServiceProvider extends ServiceProvider
     public function register()
     {
         $this->configure();
-        $this->bindLogger();
-        $this->bindInvoiceRenderer();
+//        $this->bindLogger();
+//        $this->bindInvoiceRenderer();
     }
 
     /**

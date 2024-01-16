@@ -1,6 +1,7 @@
 <?php
 
 use Laravel\Cashier\Console\WebhookCommand;
+use Laravel\Cashier\Enums\GatewaysEnum;
 use Laravel\Cashier\Invoices\DompdfInvoiceRenderer;
 
 return [
@@ -121,5 +122,8 @@ return [
     */
 
     'logger' => env('CASHIER_LOGGER'),
-
+  'gateway' => env('CASHIER_GATEWAY', GatewaysEnum::STRIPE->value),
+  'database' => [
+    'table_prefix' => env('CASHIER_DATABASE_TABLE_PREFIX', 'cashier_')
+  ],
 ];
