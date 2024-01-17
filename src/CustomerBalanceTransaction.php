@@ -1,8 +1,8 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
-use Laravel\Cashier\Exceptions\InvalidCustomerBalanceTransaction;
+use BitbossHub\Cashier\Exceptions\InvalidCustomerBalanceTransaction;
 use Stripe\CustomerBalanceTransaction as StripeCustomerBalanceTransaction;
 
 class CustomerBalanceTransaction
@@ -28,7 +28,7 @@ class CustomerBalanceTransaction
      * @param  \Stripe\CustomerBalanceTransaction  $transaction
      * @return void
      *
-     * @throws \Laravel\Cashier\Exceptions\InvalidCustomerBalanceTransaction
+     * @throws \BitbossHub\Cashier\Exceptions\InvalidCustomerBalanceTransaction
      */
     public function __construct($owner, StripeCustomerBalanceTransaction $transaction)
     {
@@ -94,7 +94,7 @@ class CustomerBalanceTransaction
     /**
      * Return the related invoice for this transaction.
      *
-     * @return \Laravel\Cashier\Invoice
+     * @return \BitbossHub\Cashier\Invoice
      */
     public function invoice()
     {

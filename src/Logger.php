@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
 use Psr\Log\LoggerInterface;
 use Stripe\Util\LoggerInterface as StripeLogger;

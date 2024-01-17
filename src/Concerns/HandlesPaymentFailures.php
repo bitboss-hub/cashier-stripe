@@ -1,10 +1,10 @@
 <?php
 
-namespace Laravel\Cashier\Concerns;
+namespace BitbossHub\Cashier\Concerns;
 
-use Laravel\Cashier\Exceptions\IncompletePayment;
-use Laravel\Cashier\Payment;
-use Laravel\Cashier\Subscription;
+use BitbossHub\Cashier\Exceptions\IncompletePayment;
+use BitbossHub\Cashier\Payment;
+use BitbossHub\Cashier\Subscription;
 use Stripe\Exception\CardException as StripeCardException;
 use Stripe\PaymentMethod as StripePaymentMethod;
 
@@ -27,11 +27,11 @@ trait HandlesPaymentFailures
     /**
      * Handle a failed payment for the given subscription.
      *
-     * @param  \Laravel\Cashier\Subscription  $subscription
+     * @param  \BitbossHub\Cashier\Subscription  $subscription
      * @param  \Stripe\PaymentMethod|string|null  $paymentMethod
      * @return void
      *
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
      *
      * @internal
      */

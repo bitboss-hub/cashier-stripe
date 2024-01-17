@@ -1,9 +1,9 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Unit;
+namespace BitbossHub\Cashier\Tests\Unit;
 
-use Laravel\Cashier\Cashier;
-use Laravel\Cashier\Tests\TestCase;
+use BitbossHub\Cashier\Cashier;
+use BitbossHub\Cashier\Tests\TestCase;
 
 class CashierTest extends TestCase
 {

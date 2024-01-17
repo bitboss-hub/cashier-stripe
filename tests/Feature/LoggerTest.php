@@ -1,9 +1,9 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Feature;
+namespace BitbossHub\Cashier\Tests\Feature;
 
-use Laravel\Cashier\Logger;
-use Laravel\Cashier\Tests\TestCase;
+use BitbossHub\Cashier\Logger;
+use BitbossHub\Cashier\Tests\TestCase;
 use Mockery as m;
 use Psr\Log\LoggerInterface as PsrLoggerInterface;
 use Stripe\Stripe;

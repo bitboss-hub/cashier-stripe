@@ -1,8 +1,8 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Feature;
+namespace BitbossHub\Cashier\Tests\Feature;
 
-use Laravel\Cashier\PaymentMethod;
+use BitbossHub\Cashier\PaymentMethod;
 use Stripe\Card as StripeCard;
 use Stripe\SetupIntent as StripeSetupIntent;
 

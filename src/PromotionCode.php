@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
@@ -30,7 +30,7 @@ class PromotionCode implements Arrayable, Jsonable, JsonSerializable
     /**
      * Get the coupon that belongs to the promotion code.
      *
-     * @return \Laravel\Cashier\Coupon
+     * @return \BitbossHub\Cashier\Coupon
      */
     public function coupon()
     {

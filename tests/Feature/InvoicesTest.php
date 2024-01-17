@@ -1,10 +1,10 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Feature;
+namespace BitbossHub\Cashier\Tests\Feature;
 
-use Laravel\Cashier\Exceptions\InvalidCustomer;
-use Laravel\Cashier\Exceptions\InvalidInvoice;
-use Laravel\Cashier\Invoice;
+use BitbossHub\Cashier\Exceptions\InvalidCustomer;
+use BitbossHub\Cashier\Exceptions\InvalidInvoice;
+use BitbossHub\Cashier\Invoice;
 use Stripe\InvoiceItem as StripeInvoiceItem;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -55,7 +55,7 @@ class InvoicesTest extends FeatureTestCase
         $price = $user->stripe()->prices->create([
             'currency' => $user->preferredCurrency(),
             'product_data' => [
-                'name' => 'Laravel T-shirt',
+                'name' => 'BitbossHub T-shirt',
             ],
             'unit_amount' => 499,
         ]);
@@ -73,11 +73,11 @@ class InvoicesTest extends FeatureTestCase
         $user->updateDefaultPaymentMethod('pm_card_visa');
 
         $productId = self::stripe()->products->create([
-            'name' => 'Laravel Cashier Test Product',
+            'name' => 'BitbossHub Cashier Test Product',
             'type' => 'service',
         ])->id;
 
-        $response = $user->invoiceFor('Laravel T-shirt', 599, [
+        $response = $user->invoiceFor('BitbossHub T-shirt', 599, [
             'price_data' => [
                 'product' => $productId,
                 'tax_behavior' => 'exclusive',

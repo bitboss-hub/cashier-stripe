@@ -1,11 +1,11 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use JsonSerializable;
-use Laravel\Cashier\Exceptions\InvalidPaymentMethod;
+use BitbossHub\Cashier\Exceptions\InvalidPaymentMethod;
 use LogicException;
 use Stripe\PaymentMethod as StripePaymentMethod;
 
@@ -32,7 +32,7 @@ class PaymentMethod implements Arrayable, Jsonable, JsonSerializable
      * @param  \Stripe\PaymentMethod  $paymentMethod
      * @return void
      *
-     * @throws \Laravel\Cashier\Exceptions\InvalidPaymentMethod
+     * @throws \BitbossHub\Cashier\Exceptions\InvalidPaymentMethod
      */
     public function __construct($owner, StripePaymentMethod $paymentMethod)
     {

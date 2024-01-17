@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{{ __('Payment Confirmation') }} - {{ config('app.name', 'Laravel') }}</title>
+    <title>{{ __('Payment Confirmation') }} - {{ config('app.name', 'BitbossHub') }}</title>
 
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 

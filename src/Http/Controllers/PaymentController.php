@@ -1,12 +1,12 @@
 <?php
 
-namespace Laravel\Cashier\Http\Controllers;
+namespace BitbossHub\Cashier\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
-use Laravel\Cashier\Cashier;
-use Laravel\Cashier\Http\Middleware\VerifyRedirectUrl;
-use Laravel\Cashier\Payment;
+use BitbossHub\Cashier\Cashier;
+use BitbossHub\Cashier\Http\Middleware\VerifyRedirectUrl;
+use BitbossHub\Cashier\Payment;
 
 class PaymentController extends Controller
 {

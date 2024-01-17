@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier\Utilities\Gateways;
+namespace BitbossHub\Cashier\Utilities\Gateways;
 
 use Stripe\BaseStripeClient;
 use Stripe\Collection;

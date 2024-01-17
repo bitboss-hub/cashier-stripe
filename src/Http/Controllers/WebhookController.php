@@ -1,18 +1,18 @@
 <?php
 
-namespace Laravel\Cashier\Http\Controllers;
+namespace BitbossHub\Cashier\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
-use Laravel\Cashier\Cashier;
-use Laravel\Cashier\Events\WebhookHandled;
-use Laravel\Cashier\Events\WebhookReceived;
-use Laravel\Cashier\Http\Middleware\VerifyWebhookSignature;
-use Laravel\Cashier\Payment;
-use Laravel\Cashier\Subscription;
+use BitbossHub\Cashier\Cashier;
+use BitbossHub\Cashier\Events\WebhookHandled;
+use BitbossHub\Cashier\Events\WebhookReceived;
+use BitbossHub\Cashier\Http\Middleware\VerifyWebhookSignature;
+use BitbossHub\Cashier\Payment;
+use BitbossHub\Cashier\Subscription;
 use Stripe\Stripe;
 use Stripe\Subscription as StripeSubscription;
 use Symfony\Component\HttpFoundation\Response;
@@ -315,7 +315,7 @@ class WebhookController extends Controller
      * Get the customer instance by Stripe ID.
      *
      * @param  string|null  $stripeId
-     * @return \Laravel\Cashier\Billable|null
+     * @return \BitbossHub\Cashier\Billable|null
      */
     protected function getUserByStripeId($stripeId)
     {

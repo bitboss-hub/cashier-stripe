@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Money\Currencies\ISOCurrencies;
@@ -95,7 +95,7 @@ class Cashier
      * Get the customer instance by its Stripe ID.
      *
      * @param  \Stripe\Customer|string|null  $stripeId
-     * @return \Laravel\Cashier\Billable|null
+     * @return \BitbossHub\Cashier\Billable|null
      */
     public static function findBillable($stripeId)
     {

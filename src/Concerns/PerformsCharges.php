@@ -1,9 +1,9 @@
 <?php
 
-namespace Laravel\Cashier\Concerns;
+namespace BitbossHub\Cashier\Concerns;
 
-use Laravel\Cashier\Checkout;
-use Laravel\Cashier\Payment;
+use BitbossHub\Cashier\Checkout;
+use BitbossHub\Cashier\Payment;
 use LogicException;
 use Stripe\Exception\InvalidRequestException as StripeInvalidRequestException;
 
@@ -17,9 +17,9 @@ trait PerformsCharges
      * @param  int  $amount
      * @param  string  $paymentMethod
      * @param  array  $options
-     * @return \Laravel\Cashier\Payment
+     * @return \BitbossHub\Cashier\Payment
      *
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
      */
     public function charge($amount, $paymentMethod, array $options = [])
     {
@@ -42,7 +42,7 @@ trait PerformsCharges
      *
      * @param  int  $amount
      * @param  array  $options
-     * @return \Laravel\Cashier\Payment
+     * @return \BitbossHub\Cashier\Payment
      */
     public function pay($amount, array $options = [])
     {
@@ -59,7 +59,7 @@ trait PerformsCharges
      * @param  int  $amount
      * @param  array  $paymentMethods
      * @param  array  $options
-     * @return \Laravel\Cashier\Payment
+     * @return \BitbossHub\Cashier\Payment
      */
     public function payWith($amount, array $paymentMethods, array $options = [])
     {
@@ -75,7 +75,7 @@ trait PerformsCharges
      *
      * @param  int  $amount
      * @param  array  $options
-     * @return \Laravel\Cashier\Payment
+     * @return \BitbossHub\Cashier\Payment
      */
     public function createPayment($amount, array $options = [])
     {
@@ -98,7 +98,7 @@ trait PerformsCharges
      * Find a payment intent by ID.
      *
      * @param  string  $id
-     * @return \Laravel\Cashier\Payment|null
+     * @return \BitbossHub\Cashier\Payment|null
      */
     public function findPayment($id)
     {
@@ -133,7 +133,7 @@ trait PerformsCharges
      * @param  array|string  $items
      * @param  array  $sessionOptions
      * @param  array  $customerOptions
-     * @return \Laravel\Cashier\Checkout
+     * @return \BitbossHub\Cashier\Checkout
      */
     public function checkout($items, array $sessionOptions = [], array $customerOptions = [])
     {
@@ -149,7 +149,7 @@ trait PerformsCharges
      * @param  array  $sessionOptions
      * @param  array  $customerOptions
      * @param  array  $productData
-     * @return \Laravel\Cashier\Checkout
+     * @return \BitbossHub\Cashier\Checkout
      */
     public function checkoutCharge($amount, $name, $quantity = 1, array $sessionOptions = [], array $customerOptions = [], array $productData = [])
     {

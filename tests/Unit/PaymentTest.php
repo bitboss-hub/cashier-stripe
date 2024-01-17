@@ -1,8 +1,8 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Unit;
+namespace BitbossHub\Cashier\Tests\Unit;
 
-use Laravel\Cashier\Payment;
+use BitbossHub\Cashier\Payment;
 use PHPUnit\Framework\TestCase;
 use Stripe\PaymentIntent as StripePaymentIntent;
 use Stripe\Subscription as StripeSubscription;

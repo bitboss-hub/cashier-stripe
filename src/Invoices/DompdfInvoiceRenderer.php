@@ -1,11 +1,11 @@
 <?php
 
-namespace Laravel\Cashier\Invoices;
+namespace BitbossHub\Cashier\Invoices;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Laravel\Cashier\Contracts\InvoiceRenderer;
-use Laravel\Cashier\Invoice;
+use BitbossHub\Cashier\Contracts\InvoiceRenderer;
+use BitbossHub\Cashier\Invoice;
 
 class DompdfInvoiceRenderer implements InvoiceRenderer
 {

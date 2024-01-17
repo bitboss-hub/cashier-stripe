@@ -1,11 +1,11 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Feature;
+namespace BitbossHub\Cashier\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Cashier\Cashier;
-use Laravel\Cashier\Tests\Fixtures\User;
-use Laravel\Cashier\Tests\TestCase;
+use BitbossHub\Cashier\Cashier;
+use BitbossHub\Cashier\Tests\Fixtures\User;
+use BitbossHub\Cashier\Tests\TestCase;
 use Orchestra\Testbench\Concerns\WithLaravelMigrations;
 use Stripe\ApiRequestor as StripeApiRequestor;
 use Stripe\HttpClient\CurlClient as StripeCurlClient;

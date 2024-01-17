@@ -1,16 +1,16 @@
 <?php
 
-namespace Laravel\Cashier\Exceptions;
+namespace BitbossHub\Cashier\Exceptions;
 
 use Exception;
-use Laravel\Cashier\Subscription;
+use BitbossHub\Cashier\Subscription;
 
 class SubscriptionUpdateFailure extends Exception
 {
     /**
      * Create a new SubscriptionUpdateFailure instance.
      *
-     * @param  \Laravel\Cashier\Subscription  $subscription
+     * @param  \BitbossHub\Cashier\Subscription  $subscription
      * @return static
      */
     public static function incompleteSubscription(Subscription $subscription)
@@ -23,7 +23,7 @@ class SubscriptionUpdateFailure extends Exception
     /**
      * Create a new SubscriptionUpdateFailure instance.
      *
-     * @param  \Laravel\Cashier\Subscription  $subscription
+     * @param  \BitbossHub\Cashier\Subscription  $subscription
      * @param  string  $price
      * @return static
      */
@@ -37,7 +37,7 @@ class SubscriptionUpdateFailure extends Exception
     /**
      * Create a new SubscriptionUpdateFailure instance.
      *
-     * @param  \Laravel\Cashier\Subscription  $subscription
+     * @param  \BitbossHub\Cashier\Subscription  $subscription
      * @return static
      */
     public static function cannotDeleteLastPrice(Subscription $subscription)

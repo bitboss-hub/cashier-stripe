@@ -1,8 +1,8 @@
 <?php
 
-use Laravel\Cashier\Console\WebhookCommand;
-use Laravel\Cashier\Enums\GatewaysEnum;
-use Laravel\Cashier\Invoices\DompdfInvoiceRenderer;
+use BitbossHub\Cashier\Console\WebhookCommand;
+use BitbossHub\Cashier\Enums\GatewaysEnum;
+use BitbossHub\Cashier\Invoices\DompdfInvoiceRenderer;
 
 return [
 

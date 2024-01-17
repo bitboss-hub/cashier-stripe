@@ -1,6 +1,6 @@
 {
-    "name": "laravel/cashier",
-    "description": "Laravel Cashier provides an expressive, fluent interface to Stripe's subscription billing services.",
+    "name": "bitboss-hub/cashier",
+    "description": "BitbossHub Cashier provides an expressive, fluent interface to Stripe's subscription billing services.",
     "keywords": ["laravel", "stripe", "billing"],
     "license": "MIT",
     "support": {
@@ -52,13 +52,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Laravel\\Cashier\\": "src/",
-            "Laravel\\Cashier\\Database\\Factories\\": "database/factories/"
+            "BitbossHub\\Cashier\\": "src/",
+            "BitbossHub\\Cashier\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Laravel\\Cashier\\Tests\\": "tests/"
+            "BitbossHub\\Cashier\\Tests\\": "tests/"
         }
     },
     "extra": {
@@ -67,7 +67,7 @@
         },
         "laravel": {
             "providers": [
-                "Laravel\\Cashier\\CashierServiceProvider"
+                "BitbossHub\\Cashier\\CashierServiceProvider"
             ]
         }
     },

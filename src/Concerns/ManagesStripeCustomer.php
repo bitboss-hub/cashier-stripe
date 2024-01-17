@@ -1,20 +1,44 @@
 <?php
 
-namespace Laravel\Cashier\Concerns;
+namespace BitbossHub\Cashier\Concerns;
 
+use BitbossHub\Cashier\Models\StripeData;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
-use Laravel\Cashier\Cashier;
-use Laravel\Cashier\CustomerBalanceTransaction;
-use Laravel\Cashier\Discount;
-use Laravel\Cashier\Exceptions\CustomerAlreadyCreated;
-use Laravel\Cashier\Exceptions\InvalidCustomer;
-use Laravel\Cashier\PromotionCode;
+use BitbossHub\Cashier\Cashier;
+use BitbossHub\Cashier\CustomerBalanceTransaction;
+use BitbossHub\Cashier\Discount;
+use BitbossHub\Cashier\Exceptions\StripeCustomerAlreadyCreated;
+use BitbossHub\Cashier\Exceptions\InvalidCustomer;
+use BitbossHub\Cashier\PromotionCode;
 use Stripe\Customer as StripeCustomer;
 use Stripe\Exception\InvalidRequestException as StripeInvalidRequestException;
 
-trait ManagesCustomer
+trait ManagesStripeCustomer
 {
+    /**
+     * Get the model's Stripe Data.
+     */
+    public function stripeData(): MorphOne
+    {
+        return $this->morphOne(StripeData::class, 'stripeable');
+    }
+
+    /**
+     * Creates stripe data
+     * @param StripeCustomer $customer
+     * @param array $options
+     * @return StripeData
+     */
+    private function createLocalStripeData(StripeCustomer $customer, array $options = []): StripeData
+    {
+        $stripeData = new StripeData();
+        $stripeData->stripe_id = $customer->id;
+        $this->stripeData()->save($stripeData);
+        return $stripeData;
+    }
+
     /**
      * Retrieve the Stripe customer ID.
      *
@@ -22,7 +46,7 @@ trait ManagesCustomer
      */
     public function stripeId()
     {
-        return $this->stripe_id;
+        return $this->stripeData?->stripe_id;
     }
 
     /**
@@ -32,7 +56,7 @@ trait ManagesCustomer
      */
     public function hasStripeId()
     {
-        return ! is_null($this->stripe_id);
+        return ! is_null($this->stripeData?->stripe_id);
     }
 
     /**
@@ -40,7 +64,7 @@ trait ManagesCustomer
      *
      * @return void
      *
-     * @throws \Laravel\Cashier\Exceptions\InvalidCustomer
+     * @throws \BitbossHub\Cashier\Exceptions\InvalidCustomer
      */
     protected function assertCustomerExists()
     {
@@ -55,12 +79,12 @@ trait ManagesCustomer
      * @param  array  $options
      * @return \Stripe\Customer
      *
-     * @throws \Laravel\Cashier\Exceptions\CustomerAlreadyCreated
+     * @throws \BitbossHub\Cashier\Exceptions\StripeCustomerAlreadyCreated
      */
     public function createAsStripeCustomer(array $options = [])
     {
         if ($this->hasStripeId()) {
-            throw CustomerAlreadyCreated::exists($this);
+            throw StripeCustomerAlreadyCreated::exists($this);
         }
 
         if (! array_key_exists('name', $options) && $name = $this->stripeName()) {
@@ -91,10 +115,7 @@ trait ManagesCustomer
         // user from Stripe. This ID will correspond with the Stripe user instances
         // and allow us to retrieve users from Stripe later when we need to work.
         $customer = static::stripe()->customers->create($options);
-
-        $this->stripe_id = $customer->id;
-
-        $this->save();
+        $this->createLocalStripeData($customer);
 
         return $customer;
     }
@@ -233,7 +254,7 @@ trait ManagesCustomer
     /**
      * The discount that applies to the customer, if applicable.
      *
-     * @return \Laravel\Cashier\Discount|null
+     * @return \BitbossHub\Cashier\Discount|null
      */
     public function discount()
     {
@@ -279,7 +300,7 @@ trait ManagesCustomer
      *
      * @param  string  $code
      * @param  array  $options
-     * @return \Laravel\Cashier\PromotionCode|null
+     * @return \BitbossHub\Cashier\PromotionCode|null
      */
     public function findPromotionCode($code, array $options = [])
     {
@@ -298,7 +319,7 @@ trait ManagesCustomer
      *
      * @param  string  $code
      * @param  array  $options
-     * @return \Laravel\Cashier\PromotionCode|null
+     * @return \BitbossHub\Cashier\PromotionCode|null
      */
     public function findActivePromotionCode($code, array $options = [])
     {
@@ -357,7 +378,7 @@ trait ManagesCustomer
      * @param  int  $amount
      * @param  string|null  $description
      * @param  array  $options
-     * @return \Laravel\Cashier\CustomerBalanceTransaction
+     * @return \BitbossHub\Cashier\CustomerBalanceTransaction
      */
     public function creditBalance($amount, $description = null, array $options = [])
     {
@@ -370,7 +391,7 @@ trait ManagesCustomer
      * @param  int  $amount
      * @param  string|null  $description
      * @param  array  $options
-     * @return \Laravel\Cashier\CustomerBalanceTransaction
+     * @return \BitbossHub\Cashier\CustomerBalanceTransaction
      */
     public function debitBalance($amount, $description = null, array $options = [])
     {
@@ -383,7 +404,7 @@ trait ManagesCustomer
      * @param  int  $amount
      * @param  string|null  $description
      * @param  array  $options
-     * @return \Laravel\Cashier\CustomerBalanceTransaction
+     * @return \BitbossHub\Cashier\CustomerBalanceTransaction
      */
     public function applyBalance($amount, $description = null, array $options = [])
     {

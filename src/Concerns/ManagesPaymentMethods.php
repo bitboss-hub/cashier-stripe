@@ -1,10 +1,10 @@
 <?php
 
-namespace Laravel\Cashier\Concerns;
+namespace BitbossHub\Cashier\Concerns;
 
 use Exception;
 use Illuminate\Support\Collection;
-use Laravel\Cashier\PaymentMethod;
+use BitbossHub\Cashier\PaymentMethod;
 use Stripe\BankAccount as StripeBankAccount;
 use Stripe\Card as StripeCard;
 use Stripe\PaymentMethod as StripePaymentMethod;
@@ -65,7 +65,7 @@ trait ManagesPaymentMethods
      *
      * @param  string|null  $type
      * @param  array  $parameters
-     * @return \Illuminate\Support\Collection|\Laravel\Cashier\PaymentMethod[]
+     * @return \Illuminate\Support\Collection|\BitbossHub\Cashier\PaymentMethod[]
      */
     public function paymentMethods($type = null, $parameters = [])
     {
@@ -89,7 +89,7 @@ trait ManagesPaymentMethods
      * Add a payment method to the customer.
      *
      * @param  \Stripe\PaymentMethod|string  $paymentMethod
-     * @return \Laravel\Cashier\PaymentMethod
+     * @return \BitbossHub\Cashier\PaymentMethod
      */
     public function addPaymentMethod($paymentMethod)
     {
@@ -140,7 +140,7 @@ trait ManagesPaymentMethods
     /**
      * Get the default payment method for the customer.
      *
-     * @return \Laravel\Cashier\PaymentMethod|\Stripe\Card|\Stripe\BankAccount|null
+     * @return \BitbossHub\Cashier\PaymentMethod|\Stripe\Card|\Stripe\BankAccount|null
      */
     public function defaultPaymentMethod()
     {
@@ -163,7 +163,7 @@ trait ManagesPaymentMethods
      * Update customer's default payment method.
      *
      * @param  \Stripe\PaymentMethod|string  $paymentMethod
-     * @return \Laravel\Cashier\PaymentMethod
+     * @return \BitbossHub\Cashier\PaymentMethod
      */
     public function updateDefaultPaymentMethod($paymentMethod)
     {
@@ -226,7 +226,7 @@ trait ManagesPaymentMethods
     /**
      * Fills the model's properties with the payment method from Stripe.
      *
-     * @param  \Laravel\Cashier\PaymentMethod|\Stripe\PaymentMethod|null  $paymentMethod
+     * @param  \BitbossHub\Cashier\PaymentMethod|\Stripe\PaymentMethod|null  $paymentMethod
      * @return $this
      */
     protected function fillPaymentMethodDetails($paymentMethod)
@@ -282,7 +282,7 @@ trait ManagesPaymentMethods
      * Find a PaymentMethod by ID.
      *
      * @param  string  $paymentMethod
-     * @return \Laravel\Cashier\PaymentMethod|null
+     * @return \BitbossHub\Cashier\PaymentMethod|null
      */
     public function findPaymentMethod($paymentMethod)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Feature;
+namespace BitbossHub\Cashier\Tests\Feature;
 
 use Illuminate\Support\Str;
 
@@ -45,7 +45,7 @@ class DiscountTest extends FeatureTestCase
         parent::setUpBeforeClass();
 
         static::$productId = self::stripe()->products->create([
-            'name' => 'Laravel Cashier Test Product',
+            'name' => 'BitbossHub Cashier Test Product',
             'type' => 'service',
         ])->id;
 

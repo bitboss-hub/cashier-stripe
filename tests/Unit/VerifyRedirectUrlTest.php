@@ -1,9 +1,9 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Unit;
+namespace BitbossHub\Cashier\Tests\Unit;
 
 use Illuminate\Http\Request;
-use Laravel\Cashier\Http\Middleware\VerifyRedirectUrl;
+use BitbossHub\Cashier\Http\Middleware\VerifyRedirectUrl;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 

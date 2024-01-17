@@ -1,9 +1,9 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Feature;
+namespace BitbossHub\Cashier\Tests\Feature;
 
-use Laravel\Cashier\Exceptions\IncompletePayment;
-use Laravel\Cashier\Payment;
+use BitbossHub\Cashier\Exceptions\IncompletePayment;
+use BitbossHub\Cashier\Payment;
 
 class ChargesTest extends FeatureTestCase
 {
@@ -60,11 +60,11 @@ class ChargesTest extends FeatureTestCase
         $user->createAsStripeCustomer();
         $user->updateDefaultPaymentMethod('pm_card_visa');
 
-        $user->invoiceFor('Laravel Cashier', 1000);
+        $user->invoiceFor('BitbossHub Cashier', 1000);
 
         $invoice = $user->invoices()[0];
         $this->assertEquals('$10.00', $invoice->total());
-        $this->assertEquals('Laravel Cashier', $invoice->invoiceItems()[0]->asStripeInvoiceLineItem()->description);
+        $this->assertEquals('BitbossHub Cashier', $invoice->invoiceItems()[0]->asStripeInvoiceLineItem()->description);
     }
 
     public function test_customer_can_be_refunded()
@@ -73,7 +73,7 @@ class ChargesTest extends FeatureTestCase
         $user->createAsStripeCustomer();
         $user->updateDefaultPaymentMethod('pm_card_visa');
 
-        $invoice = $user->invoiceFor('Laravel Cashier', 1000);
+        $invoice = $user->invoiceFor('BitbossHub Cashier', 1000);
         $refund = $user->refund($invoice->payment_intent);
 
         $this->assertEquals(1000, $refund->amount);

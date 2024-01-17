@@ -1,10 +1,10 @@
 <?php
 
-namespace Laravel\Cashier\Exceptions;
+namespace BitbossHub\Cashier\Exceptions;
 
 use Exception;
 
-class CustomerAlreadyCreated extends Exception
+class StripeCustomerAlreadyCreated extends Exception
 {
     /**
      * Create a new CustomerAlreadyCreated instance.
@@ -14,6 +14,6 @@ class CustomerAlreadyCreated extends Exception
      */
     public static function exists($owner)
     {
-        return new static(class_basename($owner)." is already a Stripe customer with ID {$owner->stripe_id}.");
+        return new static(class_basename($owner)." is already a Stripe customer with ID {$owner->stripeData?->stripe_id}.");
     }
 }

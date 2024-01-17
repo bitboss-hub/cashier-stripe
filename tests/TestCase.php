@@ -1,11 +1,11 @@
 <?php
 
-namespace Laravel\Cashier\Tests;
+namespace BitbossHub\Cashier\Tests;
 
 use Illuminate\Support\Str;
 use InvalidArgumentException;
-use Laravel\Cashier\Cashier;
-use Laravel\Cashier\Tests\Fixtures\User;
+use BitbossHub\Cashier\Cashier;
+use BitbossHub\Cashier\Tests\Fixtures\User;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 

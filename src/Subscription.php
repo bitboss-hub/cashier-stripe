@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
@@ -9,18 +9,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
-use Laravel\Cashier\Concerns\AllowsCoupons;
-use Laravel\Cashier\Concerns\HandlesPaymentFailures;
-use Laravel\Cashier\Concerns\InteractsWithPaymentBehavior;
-use Laravel\Cashier\Concerns\Prorates;
-use Laravel\Cashier\Database\Factories\SubscriptionFactory;
-use Laravel\Cashier\Exceptions\IncompletePayment;
-use Laravel\Cashier\Exceptions\SubscriptionUpdateFailure;
+use BitbossHub\Cashier\Concerns\AllowsCoupons;
+use BitbossHub\Cashier\Concerns\HandlesPaymentFailures;
+use BitbossHub\Cashier\Concerns\InteractsWithPaymentBehavior;
+use BitbossHub\Cashier\Concerns\Prorates;
+use BitbossHub\Cashier\Database\Factories\SubscriptionFactory;
+use BitbossHub\Cashier\Exceptions\IncompletePayment;
+use BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure;
 use LogicException;
 use Stripe\Subscription as StripeSubscription;
 
 /**
- * @property \Laravel\Cashier\Billable|\Illuminate\Database\Eloquent\Model $owner
+ * @property \BitbossHub\Cashier\Billable|\Illuminate\Database\Eloquent\Model $owner
  */
 class Subscription extends Model
 {
@@ -148,7 +148,7 @@ class Subscription extends Model
      * Get the subscription item for the given price.
      *
      * @param  string  $price
-     * @return \Laravel\Cashier\SubscriptionItem
+     * @return \BitbossHub\Cashier\SubscriptionItem
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
@@ -428,7 +428,7 @@ class Subscription extends Model
      * @param  string|null  $price
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function incrementQuantity($count = 1, $price = null)
     {
@@ -452,8 +452,8 @@ class Subscription extends Model
      * @param  string|null  $price
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function incrementAndInvoice($count = 1, $price = null)
     {
@@ -471,7 +471,7 @@ class Subscription extends Model
      * @param  string|null  $price
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function decrementQuantity($count = 1, $price = null)
     {
@@ -495,7 +495,7 @@ class Subscription extends Model
      * @param  string|null  $price
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function updateQuantity($quantity, $price = null)
     {
@@ -669,8 +669,8 @@ class Subscription extends Model
      * @param  array  $options
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function swap($prices, array $options = [])
     {
@@ -730,8 +730,8 @@ class Subscription extends Model
      * @param  array  $options
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function swapAndInvoice($prices, array $options = [])
     {
@@ -839,7 +839,7 @@ class Subscription extends Model
      * @param  array  $options
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function addPrice($price, $quantity = 1, array $options = [])
     {
@@ -894,8 +894,8 @@ class Subscription extends Model
      * @param  array  $options
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function addPriceAndInvoice($price, $quantity = 1, array $options = [])
     {
@@ -911,7 +911,7 @@ class Subscription extends Model
      * @param  array  $options
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function addMeteredPrice($price, array $options = [])
     {
@@ -925,8 +925,8 @@ class Subscription extends Model
      * @param  array  $options
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function addMeteredPriceAndInvoice($price, array $options = [])
     {
@@ -939,7 +939,7 @@ class Subscription extends Model
      * @param  string  $price
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function removePrice($price)
     {
@@ -1116,9 +1116,9 @@ class Subscription extends Model
      * Invoice the subscription outside of the regular billing cycle.
      *
      * @param  array  $options
-     * @return \Laravel\Cashier\Invoice
+     * @return \BitbossHub\Cashier\Invoice
      *
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
      */
     public function invoice(array $options = [])
     {
@@ -1137,7 +1137,7 @@ class Subscription extends Model
     /**
      * Get the latest invoice for the subscription.
      *
-     * @return \Laravel\Cashier\Invoice|null
+     * @return \BitbossHub\Cashier\Invoice|null
      */
     public function latestInvoice(array $expand = [])
     {
@@ -1152,7 +1152,7 @@ class Subscription extends Model
      * Fetches upcoming invoice for this subscription.
      *
      * @param  array  $options
-     * @return \Laravel\Cashier\Invoice|null
+     * @return \BitbossHub\Cashier\Invoice|null
      */
     public function upcomingInvoice(array $options = [])
     {
@@ -1170,7 +1170,7 @@ class Subscription extends Model
      *
      * @param  string|array  $prices
      * @param  array  $options
-     * @return \Laravel\Cashier\Invoice|null
+     * @return \BitbossHub\Cashier\Invoice|null
      */
     public function previewInvoice($prices, array $options = [])
     {
@@ -1206,7 +1206,7 @@ class Subscription extends Model
      *
      * @param  bool  $includePending
      * @param  array  $parameters
-     * @return \Illuminate\Support\Collection|\Laravel\Cashier\Invoice[]
+     * @return \Illuminate\Support\Collection|\BitbossHub\Cashier\Invoice[]
      */
     public function invoices($includePending = false, $parameters = [])
     {
@@ -1219,7 +1219,7 @@ class Subscription extends Model
      * Get an array of the subscription's invoices, including pending invoices.
      *
      * @param  array  $parameters
-     * @return \Illuminate\Support\Collection|\Laravel\Cashier\Invoice[]
+     * @return \Illuminate\Support\Collection|\BitbossHub\Cashier\Invoice[]
      */
     public function invoicesIncludingPending(array $parameters = [])
     {
@@ -1272,7 +1272,7 @@ class Subscription extends Model
     /**
      * Get the latest payment for a Subscription.
      *
-     * @return \Laravel\Cashier\Payment|null
+     * @return \BitbossHub\Cashier\Payment|null
      */
     public function latestPayment()
     {
@@ -1288,7 +1288,7 @@ class Subscription extends Model
     /**
      * The discount that applies to the subscription, if applicable.
      *
-     * @return \Laravel\Cashier\Discount|null
+     * @return \BitbossHub\Cashier\Discount|null
      */
     public function discount()
     {
@@ -1330,7 +1330,7 @@ class Subscription extends Model
      *
      * @return void
      *
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function guardAgainstIncomplete()
     {

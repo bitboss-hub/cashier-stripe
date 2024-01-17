@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
@@ -41,7 +41,7 @@ class Checkout implements Arrayable, Jsonable, JsonSerializable, Responsable
     /**
      * Begin a new guest checkout session.
      *
-     * @return \Laravel\Cashier\CheckoutBuilder
+     * @return \BitbossHub\Cashier\CheckoutBuilder
      */
     public static function guest()
     {
@@ -53,7 +53,7 @@ class Checkout implements Arrayable, Jsonable, JsonSerializable, Responsable
      *
      * @param  \Illuminate\Database\Eloquent\Model  $owner
      * @param  object|null  $parentInstance
-     * @return \Laravel\Cashier\CheckoutBuilder
+     * @return \BitbossHub\Cashier\CheckoutBuilder
      */
     public static function customer($owner, $parentInstance = null)
     {
@@ -66,7 +66,7 @@ class Checkout implements Arrayable, Jsonable, JsonSerializable, Responsable
      * @param  \Illuminate\Database\Eloquent\Model|null  $owner
      * @param  array  $sessionOptions
      * @param  array  $customerOptions
-     * @return \Laravel\Cashier\Checkout
+     * @return \BitbossHub\Cashier\Checkout
      */
     public static function create($owner, array $sessionOptions = [], array $customerOptions = [])
     {

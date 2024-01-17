@@ -1,18 +1,18 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Laravel\Cashier\Concerns\HandlesPaymentFailures;
-use Laravel\Cashier\Concerns\InteractsWithPaymentBehavior;
-use Laravel\Cashier\Concerns\Prorates;
-use Laravel\Cashier\Database\Factories\SubscriptionItemFactory;
+use BitbossHub\Cashier\Concerns\HandlesPaymentFailures;
+use BitbossHub\Cashier\Concerns\InteractsWithPaymentBehavior;
+use BitbossHub\Cashier\Concerns\Prorates;
+use BitbossHub\Cashier\Database\Factories\SubscriptionItemFactory;
 
 /**
- * @property \Laravel\Cashier\Subscription|null $subscription
+ * @property \BitbossHub\Cashier\Subscription|null $subscription
  */
 class SubscriptionItem extends Model
 {
@@ -55,7 +55,7 @@ class SubscriptionItem extends Model
      * @param  int  $count
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function incrementQuantity($count = 1)
     {
@@ -70,8 +70,8 @@ class SubscriptionItem extends Model
      * @param  int  $count
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function incrementAndInvoice($count = 1)
     {
@@ -88,7 +88,7 @@ class SubscriptionItem extends Model
      * @param  int  $count
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function decrementQuantity($count = 1)
     {
@@ -103,7 +103,7 @@ class SubscriptionItem extends Model
      * @param  int  $quantity
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function updateQuantity($quantity)
     {
@@ -143,7 +143,7 @@ class SubscriptionItem extends Model
      * @param  array  $options
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function swap($price, array $options = [])
     {
@@ -192,8 +192,8 @@ class SubscriptionItem extends Model
      * @param  array  $options
      * @return $this
      *
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
-     * @throws \Laravel\Cashier\Exceptions\SubscriptionUpdateFailure
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
      */
     public function swapAndInvoice($price, array $options = [])
     {

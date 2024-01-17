@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier\Jobs;
+namespace BitbossHub\Cashier\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,14 +18,14 @@ class SyncCustomerDetails implements ShouldQueue
     /**
      * The billable model instance.
      *
-     * @var \Laravel\Cashier\Billable
+     * @var \BitbossHub\Cashier\Billable
      */
     public $billable;
 
     /**
      * Create a new job instance.
      *
-     * @param  \Laravel\Cashier\Billable  $billable
+     * @param  \BitbossHub\Cashier\Billable  $billable
      * @return void
      */
     public function __construct($billable)

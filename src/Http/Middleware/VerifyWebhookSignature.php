@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier\Http\Middleware;
+namespace BitbossHub\Cashier\Http\Middleware;
 
 use Closure;
 use Stripe\Exception\SignatureVerificationException;

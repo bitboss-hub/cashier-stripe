@@ -1,12 +1,12 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Feature;
+namespace BitbossHub\Cashier\Tests\Feature;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
-use Laravel\Cashier\Exceptions\SubscriptionUpdateFailure;
-use Laravel\Cashier\Tests\Fixtures\User;
+use BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure;
+use BitbossHub\Cashier\Tests\Fixtures\User;
 use Stripe\Subscription as StripeSubscription;
 
 class SubscriptionsWithMultiplePricesTest extends FeatureTestCase
@@ -45,7 +45,7 @@ class SubscriptionsWithMultiplePricesTest extends FeatureTestCase
         parent::setUpBeforeClass();
 
         static::$productId = self::stripe()->products->create([
-            'name' => 'Laravel Cashier Test Product',
+            'name' => 'BitbossHub Cashier Test Product',
             'type' => 'service',
         ])->id;
 
@@ -322,12 +322,12 @@ class SubscriptionsWithMultiplePricesTest extends FeatureTestCase
     /**
      * Create a subscription with a single price.
      *
-     * @param  \Laravel\Cashier\Tests\Fixtures\User  $user
-     * @return \Laravel\Cashier\Subscription
+     * @param  \BitbossHub\Cashier\Tests\Fixtures\User  $user
+     * @return \BitbossHub\Cashier\Subscription
      */
     protected function createSubscriptionWithSinglePrice(User $user)
     {
-        /** @var \Laravel\Cashier\Subscription $subscription */
+        /** @var \BitbossHub\Cashier\Subscription $subscription */
         $subscription = $user->subscriptions()->create([
             'type' => 'main',
             'stripe_id' => 'sub_foo',
@@ -349,8 +349,8 @@ class SubscriptionsWithMultiplePricesTest extends FeatureTestCase
     /**
      * Create a subscription with multiple prices.
      *
-     * @param  \Laravel\Cashier\Tests\Fixtures\User  $user
-     * @return \Laravel\Cashier\Subscription
+     * @param  \BitbossHub\Cashier\Tests\Fixtures\User  $user
+     * @return \BitbossHub\Cashier\Subscription
      */
     protected function createSubscriptionWithMultiplePrices(User $user)
     {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Laravel\Cashier\Concerns;
+namespace BitbossHub\Cashier\Concerns;
 
-use Laravel\Cashier\Models\InvoiceData;
+use BitbossHub\Cashier\Models\InvoiceData;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 trait HasInvoiceData

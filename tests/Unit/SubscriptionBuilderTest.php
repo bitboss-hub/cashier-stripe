@@ -1,9 +1,9 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Unit;
+namespace BitbossHub\Cashier\Tests\Unit;
 
-use Laravel\Cashier\SubscriptionBuilder;
-use Laravel\Cashier\Tests\Fixtures\User;
+use BitbossHub\Cashier\SubscriptionBuilder;
+use BitbossHub\Cashier\Tests\Fixtures\User;
 use PHPUnit\Framework\TestCase;
 
 class SubscriptionBuilderTest extends TestCase

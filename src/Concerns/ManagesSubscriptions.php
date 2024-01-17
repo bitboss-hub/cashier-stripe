@@ -1,11 +1,11 @@
 <?php
 
-namespace Laravel\Cashier\Concerns;
+namespace BitbossHub\Cashier\Concerns;
 
 use Carbon\Carbon;
-use Laravel\Cashier\Cashier;
-use Laravel\Cashier\Subscription;
-use Laravel\Cashier\SubscriptionBuilder;
+use BitbossHub\Cashier\Cashier;
+use BitbossHub\Cashier\Subscription;
+use BitbossHub\Cashier\SubscriptionBuilder;
 
 trait ManagesSubscriptions
 {
@@ -14,7 +14,7 @@ trait ManagesSubscriptions
      *
      * @param  string  $type
      * @param  string|string[]  $prices
-     * @return \Laravel\Cashier\SubscriptionBuilder
+     * @return \BitbossHub\Cashier\SubscriptionBuilder
      */
     public function newSubscription($type, $prices = [])
     {
@@ -148,7 +148,7 @@ trait ManagesSubscriptions
      * Get a subscription instance by $type.
      *
      * @param  string  $type
-     * @return \Laravel\Cashier\Subscription|null
+     * @return \BitbossHub\Cashier\Subscription|null
      */
     public function subscription($type = 'default')
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Feature;
+namespace BitbossHub\Cashier\Tests\Feature;
 
 use Stripe\Exception\CardException as StripeCardException;
 
@@ -35,7 +35,7 @@ class PendingUpdatesTest extends FeatureTestCase
         parent::setUpBeforeClass();
 
         static::$productId = self::stripe()->products->create([
-            'name' => 'Laravel Cashier Test Product',
+            'name' => 'BitbossHub Cashier Test Product',
             'type' => 'service',
         ])->id;
 

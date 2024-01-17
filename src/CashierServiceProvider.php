@@ -1,12 +1,12 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Cashier\Console\WebhookCommand;
-use Laravel\Cashier\Contracts\InvoiceRenderer;
-use Laravel\Cashier\Invoices\DompdfInvoiceRenderer;
+use BitbossHub\Cashier\Console\WebhookCommand;
+use BitbossHub\Cashier\Contracts\InvoiceRenderer;
+use BitbossHub\Cashier\Invoices\DompdfInvoiceRenderer;
 use Stripe\Stripe;
 use Stripe\Util\LoggerInterface;
 
@@ -26,7 +26,7 @@ class CashierServiceProvider extends ServiceProvider
 //        $this->registerCommands();
 
         Stripe::setAppInfo(
-            'Laravel Cashier',
+            'BitbossHub Cashier',
             Cashier::VERSION,
             'https://laravel.com'
         );
@@ -104,7 +104,7 @@ class CashierServiceProvider extends ServiceProvider
         if (Cashier::$registersRoutes) {
             Route::group([
                 'prefix' => config('cashier.path'),
-                'namespace' => 'Laravel\Cashier\Http\Controllers',
+                'namespace' => 'BitbossHub\Cashier\Http\Controllers',
                 'as' => 'cashier.',
             ], function () {
                 $this->loadRoutesFrom(__DIR__.'/../routes/web.php');

@@ -1,15 +1,15 @@
 <?php
 
-namespace Laravel\Cashier\Concerns;
+namespace BitbossHub\Cashier\Concerns;
 
 use Illuminate\Pagination\Cursor;
 use Illuminate\Pagination\CursorPaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Laravel\Cashier\Exceptions\InvalidInvoice;
-use Laravel\Cashier\Invoice;
-use Laravel\Cashier\Payment;
+use BitbossHub\Cashier\Exceptions\InvalidInvoice;
+use BitbossHub\Cashier\Invoice;
+use BitbossHub\Cashier\Payment;
 use LogicException;
 use Stripe\Exception\CardException as StripeCardException;
 use Stripe\Exception\InvalidRequestException as StripeInvalidRequestException;
@@ -61,9 +61,9 @@ trait ManagesInvoices
      * @param  int  $amount
      * @param  array  $tabOptions
      * @param  array  $invoiceOptions
-     * @return \Laravel\Cashier\Invoice
+     * @return \BitbossHub\Cashier\Invoice
      *
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
      */
     public function invoiceFor($description, $amount, array $tabOptions = [], array $invoiceOptions = [])
     {
@@ -100,9 +100,9 @@ trait ManagesInvoices
      * @param  int  $quantity
      * @param  array  $tabOptions
      * @param  array  $invoiceOptions
-     * @return \Laravel\Cashier\Invoice
+     * @return \BitbossHub\Cashier\Invoice
      *
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
      */
     public function invoicePrice($price, $quantity = 1, array $tabOptions = [], array $invoiceOptions = [])
     {
@@ -115,9 +115,9 @@ trait ManagesInvoices
      * Invoice the customer outside of the regular billing cycle.
      *
      * @param  array  $options
-     * @return \Laravel\Cashier\Invoice
+     * @return \BitbossHub\Cashier\Invoice
      *
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
      */
     public function invoice(array $options = [])
     {
@@ -154,7 +154,7 @@ trait ManagesInvoices
      * Create an invoice within Stripe.
      *
      * @param  array  $options
-     * @return \Laravel\Cashier\Invoice
+     * @return \BitbossHub\Cashier\Invoice
      */
     public function createInvoice(array $options = [])
     {
@@ -185,7 +185,7 @@ trait ManagesInvoices
      * Get the customer's upcoming invoice.
      *
      * @param  array  $options
-     * @return \Laravel\Cashier\Invoice|null
+     * @return \BitbossHub\Cashier\Invoice|null
      */
     public function upcomingInvoice(array $options = [])
     {
@@ -211,7 +211,7 @@ trait ManagesInvoices
      * Find an invoice by ID.
      *
      * @param  string  $id
-     * @return \Laravel\Cashier\Invoice|null
+     * @return \BitbossHub\Cashier\Invoice|null
      */
     public function findInvoice($id)
     {
@@ -230,7 +230,7 @@ trait ManagesInvoices
      * Find an invoice or throw a 404 or 403 error.
      *
      * @param  string  $id
-     * @return \Laravel\Cashier\Invoice
+     * @return \BitbossHub\Cashier\Invoice
      *
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -270,7 +270,7 @@ trait ManagesInvoices
      *
      * @param  bool  $includePending
      * @param  array  $parameters
-     * @return \Illuminate\Support\Collection|\Laravel\Cashier\Invoice[]
+     * @return \Illuminate\Support\Collection|\BitbossHub\Cashier\Invoice[]
      */
     public function invoices($includePending = false, $parameters = [])
     {
@@ -304,7 +304,7 @@ trait ManagesInvoices
      * Get an array of the customer's invoices, including pending invoices.
      *
      * @param  array  $parameters
-     * @return \Illuminate\Support\Collection|\Laravel\Cashier\Invoice[]
+     * @return \Illuminate\Support\Collection|\BitbossHub\Cashier\Invoice[]
      */
     public function invoicesIncludingPending(array $parameters = [])
     {

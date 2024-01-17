@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier\Models;
+namespace BitbossHub\Cashier\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

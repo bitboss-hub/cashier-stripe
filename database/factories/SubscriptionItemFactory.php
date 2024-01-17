@@ -1,11 +1,11 @@
 <?php
 
-namespace Laravel\Cashier\Database\Factories;
+namespace BitbossHub\Cashier\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use Laravel\Cashier\Subscription;
-use Laravel\Cashier\SubscriptionItem;
+use BitbossHub\Cashier\Subscription;
+use BitbossHub\Cashier\SubscriptionItem;
 
 class SubscriptionItemFactory extends Factory
 {

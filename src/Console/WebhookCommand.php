@@ -1,9 +1,9 @@
 <?php
 
-namespace Laravel\Cashier\Console;
+namespace BitbossHub\Cashier\Console;
 
 use Illuminate\Console\Command;
-use Laravel\Cashier\Cashier;
+use BitbossHub\Cashier\Cashier;
 
 class WebhookCommand extends Command
 {

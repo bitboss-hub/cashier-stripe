@@ -1,13 +1,13 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Unit;
+namespace BitbossHub\Cashier\Tests\Unit;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
-use Laravel\Cashier\Events\WebhookHandled;
-use Laravel\Cashier\Events\WebhookReceived;
-use Laravel\Cashier\Http\Controllers\WebhookController;
-use Laravel\Cashier\Tests\TestCase;
+use BitbossHub\Cashier\Events\WebhookHandled;
+use BitbossHub\Cashier\Events\WebhookReceived;
+use BitbossHub\Cashier\Http\Controllers\WebhookController;
+use BitbossHub\Cashier\Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class WebhookControllerTest extends TestCase

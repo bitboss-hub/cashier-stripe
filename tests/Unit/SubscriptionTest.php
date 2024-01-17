@@ -1,10 +1,10 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Unit;
+namespace BitbossHub\Cashier\Tests\Unit;
 
 use InvalidArgumentException;
-use Laravel\Cashier\Exceptions\SubscriptionUpdateFailure;
-use Laravel\Cashier\Subscription;
+use BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure;
+use BitbossHub\Cashier\Subscription;
 use PHPUnit\Framework\TestCase;
 use Stripe\Subscription as StripeSubscription;
 

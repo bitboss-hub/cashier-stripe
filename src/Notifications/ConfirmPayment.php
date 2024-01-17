@@ -1,12 +1,12 @@
 <?php
 
-namespace Laravel\Cashier\Notifications;
+namespace BitbossHub\Cashier\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Laravel\Cashier\Payment;
+use BitbossHub\Cashier\Payment;
 
 class ConfirmPayment extends Notification implements ShouldQueue
 {
@@ -29,7 +29,7 @@ class ConfirmPayment extends Notification implements ShouldQueue
     /**
      * Create a new payment confirmation notification.
      *
-     * @param  \Laravel\Cashier\Payment  $payment
+     * @param  \BitbossHub\Cashier\Payment  $payment
      * @return void
      */
     public function __construct(Payment $payment)

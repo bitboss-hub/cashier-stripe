@@ -1,15 +1,15 @@
 <?php
 
-namespace Laravel\Cashier\Contracts;
+namespace BitbossHub\Cashier\Contracts;
 
-use Laravel\Cashier\Invoice;
+use BitbossHub\Cashier\Invoice;
 
 interface InvoiceRenderer
 {
     /**
      * Render the invoice as a PDF and return the raw bytes.
      *
-     * @param  \Laravel\Cashier\Invoice  $invoice
+     * @param  \BitbossHub\Cashier\Invoice  $invoice
      * @param  array  $data
      * @param  array  $options
      * @return string

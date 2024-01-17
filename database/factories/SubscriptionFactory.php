@@ -1,12 +1,12 @@
 <?php
 
-namespace Laravel\Cashier\Database\Factories;
+namespace BitbossHub\Cashier\Database\Factories;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use Laravel\Cashier\Cashier;
-use Laravel\Cashier\Subscription;
+use BitbossHub\Cashier\Cashier;
+use BitbossHub\Cashier\Subscription;
 use Stripe\Price as StripePrice;
 use Stripe\Subscription as StripeSubscription;
 

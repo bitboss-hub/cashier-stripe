@@ -1,8 +1,8 @@
 <?php
 
-namespace Laravel\Cashier\Concerns;
+namespace BitbossHub\Cashier\Concerns;
 
-use Laravel\Cashier\Cashier;
+use BitbossHub\Cashier\Cashier;
 
 trait HandlesTaxes
 {

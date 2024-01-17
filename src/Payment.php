@@ -1,12 +1,12 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Traits\ForwardsCalls;
 use JsonSerializable;
-use Laravel\Cashier\Exceptions\IncompletePayment;
+use BitbossHub\Cashier\Exceptions\IncompletePayment;
 use Stripe\PaymentIntent as StripePaymentIntent;
 
 class Payment implements Arrayable, Jsonable, JsonSerializable
@@ -23,7 +23,7 @@ class Payment implements Arrayable, Jsonable, JsonSerializable
     /**
      * The related customer instance.
      *
-     * @var \Laravel\Cashier\Billable
+     * @var \BitbossHub\Cashier\Billable
      */
     protected $customer;
 
@@ -165,7 +165,7 @@ class Payment implements Arrayable, Jsonable, JsonSerializable
      *
      * @return void
      *
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
      */
     public function validate()
     {
@@ -181,7 +181,7 @@ class Payment implements Arrayable, Jsonable, JsonSerializable
     /**
      * Retrieve the related customer for the payment intent if one exists.
      *
-     * @return \Laravel\Cashier\Billable|null
+     * @return \BitbossHub\Cashier\Billable|null
      */
     public function customer()
     {

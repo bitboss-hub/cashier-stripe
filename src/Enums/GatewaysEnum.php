@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier\Enums;
+namespace BitbossHub\Cashier\Enums;
 
 enum GatewaysEnum: string
 {

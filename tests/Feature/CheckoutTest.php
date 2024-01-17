@@ -1,8 +1,8 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Feature;
+namespace BitbossHub\Cashier\Tests\Feature;
 
-use Laravel\Cashier\Checkout;
+use BitbossHub\Cashier\Checkout;
 
 class CheckoutTest extends FeatureTestCase
 {

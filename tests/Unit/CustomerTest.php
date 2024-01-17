@@ -1,11 +1,11 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Unit;
+namespace BitbossHub\Cashier\Tests\Unit;
 
 use Carbon\Carbon;
-use Laravel\Cashier\Exceptions\CustomerAlreadyCreated;
-use Laravel\Cashier\Exceptions\InvalidCustomer;
-use Laravel\Cashier\Tests\Fixtures\User;
+use BitbossHub\Cashier\Exceptions\StripeCustomerAlreadyCreated;
+use BitbossHub\Cashier\Exceptions\InvalidCustomer;
+use BitbossHub\Cashier\Tests\Fixtures\User;
 use PHPUnit\Framework\TestCase;
 
 class CustomerTest extends TestCase
@@ -69,7 +69,7 @@ class CustomerTest extends TestCase
         $user = new User();
         $user->stripe_id = 'foo';
 
-        $this->expectException(CustomerAlreadyCreated::class);
+        $this->expectException(StripeCustomerAlreadyCreated::class);
 
         $user->createAsStripeCustomer();
     }

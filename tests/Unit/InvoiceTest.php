@@ -1,13 +1,13 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Unit;
+namespace BitbossHub\Cashier\Tests\Unit;
 
 use Carbon\Carbon;
 use Carbon\CarbonTimeZone;
-use Laravel\Cashier\Discount;
-use Laravel\Cashier\Invoice;
-use Laravel\Cashier\Tests\Fixtures\User;
-use Laravel\Cashier\Tests\TestCase;
+use BitbossHub\Cashier\Discount;
+use BitbossHub\Cashier\Invoice;
+use BitbossHub\Cashier\Tests\Fixtures\User;
+use BitbossHub\Cashier\Tests\TestCase;
 use Mockery as m;
 use stdClass;
 use Stripe\Customer as StripeCustomer;

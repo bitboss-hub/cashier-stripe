@@ -10,6 +10,6 @@
     </testsuites>
     <php>
         <env name="DB_CONNECTION" value="testing"/>
-        <env name="CASHIER_PAYMENT_NOTIFICATION" value="Laravel\Cashier\Notifications\ConfirmPayment"/>
+        <env name="CASHIER_PAYMENT_NOTIFICATION" value="BitbossHub\Cashier\Notifications\ConfirmPayment"/>
     </php>
 </phpunit>

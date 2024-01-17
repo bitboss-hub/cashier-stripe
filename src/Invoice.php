@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
@@ -9,8 +9,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use JsonSerializable;
-use Laravel\Cashier\Contracts\InvoiceRenderer;
-use Laravel\Cashier\Exceptions\InvalidInvoice;
+use BitbossHub\Cashier\Contracts\InvoiceRenderer;
+use BitbossHub\Cashier\Exceptions\InvalidInvoice;
 use Stripe\Customer as StripeCustomer;
 use Stripe\Invoice as StripeInvoice;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,21 +34,21 @@ class Invoice implements Arrayable, Jsonable, JsonSerializable
     /**
      * The Stripe invoice line items.
      *
-     * @var \Laravel\Cashier\InvoiceLineItem[]
+     * @var \BitbossHub\Cashier\InvoiceLineItem[]
      */
     protected $items;
 
     /**
      * The taxes applied to the invoice.
      *
-     * @var \Laravel\Cashier\Tax[]
+     * @var \BitbossHub\Cashier\Tax[]
      */
     protected $taxes;
 
     /**
      * The discounts applied to the invoice.
      *
-     * @var \Laravel\Cashier\Discount[]
+     * @var \BitbossHub\Cashier\Discount[]
      */
     protected $discounts;
 
@@ -74,7 +74,7 @@ class Invoice implements Arrayable, Jsonable, JsonSerializable
      * @param  array  $refreshData
      * @return void
      *
-     * @throws \Laravel\Cashier\Exceptions\InvalidInvoice
+     * @throws \BitbossHub\Cashier\Exceptions\InvalidInvoice
      */
     public function __construct($owner, StripeInvoice $invoice, array $refreshData = [])
     {
@@ -292,7 +292,7 @@ class Invoice implements Arrayable, Jsonable, JsonSerializable
     /**
      * Get all of the discount objects from the Stripe invoice.
      *
-     * @return \Laravel\Cashier\Discount[]
+     * @return \BitbossHub\Cashier\Discount[]
      */
     public function discounts()
     {
@@ -310,7 +310,7 @@ class Invoice implements Arrayable, Jsonable, JsonSerializable
     /**
      * Calculate the amount for a given discount.
      *
-     * @param  \Laravel\Cashier\Discount  $discount
+     * @param  \BitbossHub\Cashier\Discount  $discount
      * @return string|null
      */
     public function discountFor(Discount $discount)
@@ -323,7 +323,7 @@ class Invoice implements Arrayable, Jsonable, JsonSerializable
     /**
      * Calculate the raw amount for a given discount.
      *
-     * @param  \Laravel\Cashier\Discount  $discount
+     * @param  \BitbossHub\Cashier\Discount  $discount
      * @return int|null
      */
     public function rawDiscountFor(Discount $discount)
@@ -392,7 +392,7 @@ class Invoice implements Arrayable, Jsonable, JsonSerializable
     /**
      * Get the taxes applied to the invoice.
      *
-     * @return \Laravel\Cashier\Tax[]
+     * @return \BitbossHub\Cashier\Tax[]
      */
     public function taxes()
     {
@@ -463,7 +463,7 @@ class Invoice implements Arrayable, Jsonable, JsonSerializable
     /**
      * Get all of the "invoice item" line items.
      *
-     * @return \Laravel\Cashier\InvoiceLineItem[]
+     * @return \BitbossHub\Cashier\InvoiceLineItem[]
      */
     public function invoiceItems()
     {
@@ -475,7 +475,7 @@ class Invoice implements Arrayable, Jsonable, JsonSerializable
     /**
      * Get all of the "subscription" line items.
      *
-     * @return \Laravel\Cashier\InvoiceLineItem[]
+     * @return \BitbossHub\Cashier\InvoiceLineItem[]
      */
     public function subscriptions()
     {
@@ -487,7 +487,7 @@ class Invoice implements Arrayable, Jsonable, JsonSerializable
     /**
      * Get all of the invoice items.
      *
-     * @return \Laravel\Cashier\InvoiceLineItem[]
+     * @return \BitbossHub\Cashier\InvoiceLineItem[]
      */
     public function invoiceLineItems()
     {

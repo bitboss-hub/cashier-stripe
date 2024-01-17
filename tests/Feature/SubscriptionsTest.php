@@ -1,15 +1,15 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Feature;
+namespace BitbossHub\Cashier\Tests\Feature;
 
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Str;
-use Laravel\Cashier\Cashier;
-use Laravel\Cashier\Exceptions\IncompletePayment;
-use Laravel\Cashier\Payment;
-use Laravel\Cashier\Subscription;
-use Laravel\Cashier\Tests\Fixtures\User;
+use BitbossHub\Cashier\Cashier;
+use BitbossHub\Cashier\Exceptions\IncompletePayment;
+use BitbossHub\Cashier\Payment;
+use BitbossHub\Cashier\Subscription;
+use BitbossHub\Cashier\Tests\Fixtures\User;
 use Stripe\Invoice as StripeInvoice;
 use Stripe\Subscription as StripeSubscription;
 
@@ -54,7 +54,7 @@ class SubscriptionsTest extends FeatureTestCase
         parent::setUpBeforeClass();
 
         static::$productId = self::stripe()->products->create([
-            'name' => 'Laravel Cashier Test Product',
+            'name' => 'BitbossHub Cashier Test Product',
             'type' => 'service',
         ])->id;
 

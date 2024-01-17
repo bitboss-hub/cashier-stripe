@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
@@ -15,7 +15,7 @@ class InvoiceLineItem implements Arrayable, Jsonable, JsonSerializable
     /**
      * The Cashier Invoice instance.
      *
-     * @var \Laravel\Cashier\Invoice
+     * @var \BitbossHub\Cashier\Invoice
      */
     protected $invoice;
 
@@ -29,7 +29,7 @@ class InvoiceLineItem implements Arrayable, Jsonable, JsonSerializable
     /**
      * Create a new invoice line item instance.
      *
-     * @param  \Laravel\Cashier\Invoice  $invoice
+     * @param  \BitbossHub\Cashier\Invoice  $invoice
      * @param  \Stripe\InvoiceLineItem  $item
      * @return void
      */
@@ -245,7 +245,7 @@ class InvoiceLineItem implements Arrayable, Jsonable, JsonSerializable
     /**
      * Get the Stripe model instance.
      *
-     * @return \Laravel\Cashier\Invoice
+     * @return \BitbossHub\Cashier\Invoice
      */
     public function invoice()
     {

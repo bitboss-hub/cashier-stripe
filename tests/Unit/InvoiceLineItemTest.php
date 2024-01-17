@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Laravel\Cashier\Tests\Unit;
+namespace BitbossHub\Cashier\Tests\Unit;
 
-use Laravel\Cashier\Invoice;
-use Laravel\Cashier\InvoiceLineItem;
-use Laravel\Cashier\Tests\Fixtures\User;
+use BitbossHub\Cashier\Invoice;
+use BitbossHub\Cashier\InvoiceLineItem;
+use BitbossHub\Cashier\Tests\Fixtures\User;
 use PHPUnit\Framework\TestCase;
 use Stripe\Customer as StripeCustomer;
 use Stripe\Invoice as StripeInvoice;

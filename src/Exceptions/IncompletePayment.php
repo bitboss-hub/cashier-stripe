@@ -1,9 +1,9 @@
 <?php
 
-namespace Laravel\Cashier\Exceptions;
+namespace BitbossHub\Cashier\Exceptions;
 
 use Exception;
-use Laravel\Cashier\Payment;
+use BitbossHub\Cashier\Payment;
 use Throwable;
 
 class IncompletePayment extends Exception
@@ -11,14 +11,14 @@ class IncompletePayment extends Exception
     /**
      * The Cashier Payment object.
      *
-     * @var \Laravel\Cashier\Payment
+     * @var \BitbossHub\Cashier\Payment
      */
     public $payment;
 
     /**
      * Create a new IncompletePayment instance.
      *
-     * @param  \Laravel\Cashier\Payment  $payment
+     * @param  \BitbossHub\Cashier\Payment  $payment
      * @param  string  $message
      * @param  int  $code
      * @param  \Throwable|null  $previous
@@ -34,7 +34,7 @@ class IncompletePayment extends Exception
     /**
      * Create a new IncompletePayment instance with a `payment_action_required` type.
      *
-     * @param  \Laravel\Cashier\Payment  $payment
+     * @param  \BitbossHub\Cashier\Payment  $payment
      * @return static
      */
     public static function paymentMethodRequired(Payment $payment)
@@ -48,7 +48,7 @@ class IncompletePayment extends Exception
     /**
      * Create a new IncompletePayment instance with a `requires_action` type.
      *
-     * @param  \Laravel\Cashier\Payment  $payment
+     * @param  \BitbossHub\Cashier\Payment  $payment
      * @return static
      */
     public static function requiresAction(Payment $payment)
@@ -62,7 +62,7 @@ class IncompletePayment extends Exception
     /**
      * Create a new IncompletePayment instance with a `requires_confirmation` type.
      *
-     * @param  \Laravel\Cashier\Payment  $payment
+     * @param  \BitbossHub\Cashier\Payment  $payment
      * @return static
      */
     public static function requiresConfirmation(Payment $payment)

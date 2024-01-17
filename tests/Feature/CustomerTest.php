@@ -1,10 +1,10 @@
 <?php
 
-namespace Laravel\Cashier\Tests\Feature;
+namespace BitbossHub\Cashier\Tests\Feature;
 
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
-use Laravel\Cashier\CustomerBalanceTransaction;
+use BitbossHub\Cashier\CustomerBalanceTransaction;
 use Stripe\TaxId as StripeTaxId;
 
 class CustomerTest extends FeatureTestCase
@@ -107,7 +107,7 @@ class CustomerTest extends FeatureTestCase
 
         $user->applyBalance(-200);
 
-        /** @var \Laravel\Cashier\CustomerBalanceTransaction $transaction */
+        /** @var \BitbossHub\Cashier\CustomerBalanceTransaction $transaction */
         $transaction = $user->balanceTransactions()->first();
 
         $this->assertInstanceOf(CustomerBalanceTransaction::class, $transaction);

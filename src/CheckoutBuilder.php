@@ -1,10 +1,10 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
 use Illuminate\Support\Collection;
-use Laravel\Cashier\Concerns\AllowsCoupons;
-use Laravel\Cashier\Concerns\HandlesTaxes;
+use BitbossHub\Cashier\Concerns\AllowsCoupons;
+use BitbossHub\Cashier\Concerns\HandlesTaxes;
 
 class CheckoutBuilder
 {
@@ -47,7 +47,7 @@ class CheckoutBuilder
      *
      * @param  \Illuminate\Database\Eloquent\Model|null  $owner
      * @param  object|null  $instance
-     * @return \Laravel\Cashier\CheckoutBuilder
+     * @return \BitbossHub\Cashier\CheckoutBuilder
      */
     public static function make($owner = null, $instance = null)
     {
@@ -60,7 +60,7 @@ class CheckoutBuilder
      * @param  array|string  $items
      * @param  array  $sessionOptions
      * @param  array  $customerOptions
-     * @return \Laravel\Cashier\Checkout
+     * @return \BitbossHub\Cashier\Checkout
      */
     public function create($items, array $sessionOptions = [], array $customerOptions = [])
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier\Exceptions;
+namespace BitbossHub\Cashier\Exceptions;
 
 use Exception;
 

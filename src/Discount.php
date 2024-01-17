@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
@@ -31,7 +31,7 @@ class Discount implements Arrayable, Jsonable, JsonSerializable
     /**
      * Get the coupon applied to the discount.
      *
-     * @return \Laravel\Cashier\Coupon
+     * @return \BitbossHub\Cashier\Coupon
      */
     public function coupon()
     {
@@ -41,7 +41,7 @@ class Discount implements Arrayable, Jsonable, JsonSerializable
     /**
      * Get the promotion code applied to create this discount.
      *
-     * @return \Laravel\Cashier\PromotionCode|null
+     * @return \BitbossHub\Cashier\PromotionCode|null
      */
     public function promotionCode()
     {

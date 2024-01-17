@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
 use Carbon\Carbon;
 use DateTimeInterface;
@@ -9,11 +9,11 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\Conditionable;
 use InvalidArgumentException;
-use Laravel\Cashier\Concerns\AllowsCoupons;
-use Laravel\Cashier\Concerns\HandlesPaymentFailures;
-use Laravel\Cashier\Concerns\HandlesTaxes;
-use Laravel\Cashier\Concerns\InteractsWithPaymentBehavior;
-use Laravel\Cashier\Concerns\Prorates;
+use BitbossHub\Cashier\Concerns\AllowsCoupons;
+use BitbossHub\Cashier\Concerns\HandlesPaymentFailures;
+use BitbossHub\Cashier\Concerns\HandlesTaxes;
+use BitbossHub\Cashier\Concerns\InteractsWithPaymentBehavior;
+use BitbossHub\Cashier\Concerns\Prorates;
 use Stripe\Subscription as StripeSubscription;
 
 class SubscriptionBuilder
@@ -28,7 +28,7 @@ class SubscriptionBuilder
     /**
      * The model that is subscribing.
      *
-     * @var \Laravel\Cashier\Billable|\Illuminate\Database\Eloquent\Model
+     * @var \BitbossHub\Cashier\Billable|\Illuminate\Database\Eloquent\Model
      */
     protected $owner;
 
@@ -226,9 +226,9 @@ class SubscriptionBuilder
      *
      * @param  array  $customerOptions
      * @param  array  $subscriptionOptions
-     * @return \Laravel\Cashier\Subscription
+     * @return \BitbossHub\Cashier\Subscription
      *
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
      */
     public function add(array $customerOptions = [], array $subscriptionOptions = [])
     {
@@ -241,10 +241,10 @@ class SubscriptionBuilder
      * @param  \Stripe\PaymentMethod|string|null  $paymentMethod
      * @param  array  $customerOptions
      * @param  array  $subscriptionOptions
-     * @return \Laravel\Cashier\Subscription
+     * @return \BitbossHub\Cashier\Subscription
      *
      * @throws \Exception
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
      */
     public function create($paymentMethod = null, array $customerOptions = [], array $subscriptionOptions = [])
     {
@@ -272,10 +272,10 @@ class SubscriptionBuilder
      *
      * @param  array  $customerOptions
      * @param  array  $subscriptionOptions
-     * @return \Laravel\Cashier\Subscription
+     * @return \BitbossHub\Cashier\Subscription
      *
      * @throws \Exception
-     * @throws \Laravel\Cashier\Exceptions\IncompletePayment
+     * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
      */
     public function createAndSendInvoice(array $customerOptions = [], array $subscriptionOptions = [])
     {
@@ -290,7 +290,7 @@ class SubscriptionBuilder
      * Create the Eloquent Subscription.
      *
      * @param  \Stripe\Subscription  $stripeSubscription
-     * @return \Laravel\Cashier\Subscription
+     * @return \BitbossHub\Cashier\Subscription
      */
     protected function createSubscription(StripeSubscription $stripeSubscription)
     {
@@ -302,7 +302,7 @@ class SubscriptionBuilder
         $firstItem = $stripeSubscription->items->first();
         $isSinglePrice = $stripeSubscription->items->count() === 1;
 
-        /** @var \Laravel\Cashier\Subscription $subscription */
+        /** @var \BitbossHub\Cashier\Subscription $subscription */
         $subscription = $this->owner->subscriptions()->create([
             'type' => $this->type,
             'stripe_id' => $stripeSubscription->id,
@@ -331,7 +331,7 @@ class SubscriptionBuilder
      *
      * @param  array  $sessionOptions
      * @param  array  $customerOptions
-     * @return \Laravel\Cashier\Checkout
+     * @return \BitbossHub\Cashier\Checkout
      */
     public function checkout(array $sessionOptions = [], array $customerOptions = [])
     {

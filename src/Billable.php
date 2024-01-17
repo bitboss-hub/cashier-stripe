@@ -1,22 +1,20 @@
 <?php
 
-namespace Laravel\Cashier;
+namespace BitbossHub\Cashier;
 
-use Laravel\Cashier\Concerns\HandlesTaxes;
-use Laravel\Cashier\Concerns\HasInvoiceData;
-use Laravel\Cashier\Concerns\HasStripeData;
-use Laravel\Cashier\Concerns\ManagesCustomer;
-use Laravel\Cashier\Concerns\ManagesInvoices;
-use Laravel\Cashier\Concerns\ManagesPaymentMethods;
-use Laravel\Cashier\Concerns\ManagesSubscriptions;
-use Laravel\Cashier\Concerns\PerformsCharges;
+use BitbossHub\Cashier\Concerns\HandlesTaxes;
+use BitbossHub\Cashier\Concerns\HasInvoiceData;
+use BitbossHub\Cashier\Concerns\ManagesStripeCustomer;
+use BitbossHub\Cashier\Concerns\ManagesInvoices;
+use BitbossHub\Cashier\Concerns\ManagesPaymentMethods;
+use BitbossHub\Cashier\Concerns\ManagesSubscriptions;
+use BitbossHub\Cashier\Concerns\PerformsCharges;
 
 trait Billable
 {
     use HasInvoiceData;
-    use HasStripeData;
 //    use HandlesTaxes;
-//    use ManagesCustomer;
+    use ManagesStripeCustomer;
 //    use ManagesInvoices;
 //    use ManagesPaymentMethods;
 //    use ManagesSubscriptions;
