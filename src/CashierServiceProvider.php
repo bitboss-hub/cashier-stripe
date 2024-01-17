@@ -20,7 +20,7 @@ class CashierServiceProvider extends ServiceProvider
     public function boot()
     {
 //        $this->registerLogger();
-//        $this->registerRoutes();
+        $this->registerRoutes();
 //        $this->registerResources();
         $this->registerPublishing();
 //        $this->registerCommands();

@@ -20,8 +20,6 @@ use BitbossHub\Cashier\Rules\Stripe\StripeDataUpsertRule;
 
 trait ManagesStripeCustomer
 {
-    protected $with = ['stripeData'];
-
     /**
      * Get the model's Stripe Data.
      */
@@ -32,13 +30,14 @@ trait ManagesStripeCustomer
 
     /**
      * Creates stripe data
-     * @param StripeCustomer $customer
+     * @param StripeCustomer|string $customer
      * @param array $options
      * @return StripeData
      */
-    private function createLocalStripeData(StripeCustomer $customer, array $options = []): StripeData
+    public function createLocalStripeData($customer, array $options = []): StripeData
     {
-        $attributes = array_merge($options, ['stripe_id' => $customer->id]);
+        $customer_id = $customer instanceof StripeCustomer ? $customer->id : $customer;
+        $attributes = array_merge($options, ['stripe_id' => $customer_id]);
         $validator = Validator::make($attributes, StripeDataUpsertRule::rule());
         if ($validator->fails()) {
             throw InvalidStripeData::message($validator->errors()->getMessages());
@@ -120,15 +119,22 @@ trait ManagesStripeCustomer
             $options['preferred_locales'] = $locales;
         }
 
+        $modelMetaData = [
+            'model_type' => get_class($this),
+            'model_id' => $this->id
+        ];
+
         if (! array_key_exists('metadata', $options) && $metadata = $this->stripeMetadata()) {
-            $options['metadata'] = $metadata;
+            $options['metadata'] = array_merge($metadata, $modelMetaData);
+        } else {
+            $options['metadata'] = array_merge($options['metadata'], $modelMetaData);
         }
 
         // Here we will create the customer instance on Stripe and store the ID of the
         // user from Stripe. This ID will correspond with the Stripe user instances
         // and allow us to retrieve users from Stripe later when we need to work.
         $customer = static::stripe()->customers->create($options);
-        $this->createLocalStripeData($customer);
+        $this->createLocalStripeData($customer, $options);
 
         return $customer;
     }
@@ -223,16 +229,7 @@ trait ManagesStripeCustomer
      */
     public function stripeAddress()
     {
-        return [];
-
-        // return [
-        //     'city' => 'Little Rock',
-        //     'country' => 'US',
-        //     'line1' => '1 Main St.',
-        //     'line2' => 'Apartment 5',
-        //     'postal_code' => '72201',
-        //     'state' => 'Arkansas',
-        // ];
+        return $this->stripeData?->address;
     }
 
     /**
@@ -254,7 +251,7 @@ trait ManagesStripeCustomer
      */
     public function stripeMetadata()
     {
-        return [];
+        return $this->stripeData?->metadata;
     }
 
     /**

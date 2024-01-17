@@ -2,6 +2,7 @@
 
 namespace BitbossHub\Cashier;
 
+use BitbossHub\Cashier\Models\StripeData;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Money\Currencies\ISOCurrencies;
 use Money\Currency;
@@ -95,19 +96,19 @@ class Cashier
      * Get the customer instance by its Stripe ID.
      *
      * @param  \Stripe\Customer|string|null  $stripeId
-     * @return \BitbossHub\Cashier\Billable|null
+     * @return \BitbossHub\Cashier\Models\StripeData|null
      */
-    public static function findBillable($stripeId)
+    public static function findStripeData($stripeId)
     {
         $stripeId = $stripeId instanceof StripeCustomer ? $stripeId->id : $stripeId;
 
-        $model = static::$customerModel;
+//        $model = static::$customerModel;
+//
+//        $builder = in_array(SoftDeletes::class, class_uses_recursive($model))
+//            ? $model::withTrashed()
+//            : new $model;
 
-        $builder = in_array(SoftDeletes::class, class_uses_recursive($model))
-            ? $model::withTrashed()
-            : new $model;
-
-        return $stripeId ? $builder->where('stripe_id', $stripeId)->first() : null;
+        return $stripeId ? StripeData::where('stripe_id', $stripeId)->first() : null;
     }
 
     /**

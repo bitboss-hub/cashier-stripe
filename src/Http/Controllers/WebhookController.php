@@ -2,9 +2,12 @@
 
 namespace BitbossHub\Cashier\Http\Controllers;
 
+use BitbossHub\Cashier\Models\StripeData;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use BitbossHub\Cashier\Cashier;
@@ -65,7 +68,7 @@ class WebhookController extends Controller
      */
     protected function handleCustomerSubscriptionCreated(array $payload)
     {
-        $user = $this->getUserByStripeId($payload['data']['object']['customer']);
+        $user = $this->getModelByStripeId($payload['data']['object']['customer']);
 
         if ($user) {
             $data = $payload['data']['object'];
@@ -128,7 +131,7 @@ class WebhookController extends Controller
      */
     protected function handleCustomerSubscriptionUpdated(array $payload)
     {
-        if ($user = $this->getUserByStripeId($payload['data']['object']['customer'])) {
+        if ($user = $this->getModelByStripeId($payload['data']['object']['customer'])) {
             $data = $payload['data']['object'];
 
             $subscription = $user->subscriptions()->firstOrNew(['stripe_id' => $data['id']]);
@@ -213,7 +216,7 @@ class WebhookController extends Controller
      */
     protected function handleCustomerSubscriptionDeleted(array $payload)
     {
-        if ($user = $this->getUserByStripeId($payload['data']['object']['customer'])) {
+        if ($user = $this->getModelByStripeId($payload['data']['object']['customer'])) {
             $user->subscriptions->filter(function ($subscription) use ($payload) {
                 return $subscription->stripe_id === $payload['data']['object']['id'];
             })->each(function ($subscription) {
@@ -230,11 +233,52 @@ class WebhookController extends Controller
      * @param  array  $payload
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    protected function handleCustomerCreated(array $payload)
+    {
+        $params = Arr::get($payload, 'data.object');
+        $model = $this->getModelFromStripePayload($payload);
+
+        if ($model && !$model->hasStripeId()) {
+            $model->createLocalStripeData($payload['data']['object']['id'], $params);
+        }
+
+        return $this->successMethod();
+    }
+
+    protected function getModelFromStripePayload(array $payload)
+    {
+        $model_type = Arr::get($payload, 'data.object.metadata.model_type');
+        $model_id = Arr::get($payload, 'data.object.metadata.model_id');
+        if (!empty($model_type) && !empty($model_id)) {
+            $model = $model_type::find($model_id);
+            if ($model) {
+                return $model;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Handle customer updated.
+     *
+     * @param  array  $payload
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     protected function handleCustomerUpdated(array $payload)
     {
-        if ($user = $this->getUserByStripeId($payload['data']['object']['id'])) {
-            $user->updateDefaultPaymentMethodFromStripe();
+        $stripe_id = Arr::get($payload, 'data.object.id');
+        $stripeData = StripeData::where('stripe_id', $stripe_id)->first();
+        if (!empty($stripeData)) {
+            $stripeData->updateQuietly($payload['data']['object']);
+        } else {
+            $model = $this->getModelFromStripePayload($payload);
+            if ($model) {
+                $model->createLocalStripeData($stripe_id, $payload['data']['object']);
+            }
         }
+//        if ($user = $this->getModelByStripeId($payload['data']['object']['id'])) {
+//            $user->updateDefaultPaymentMethodFromStripe();
+//        }
 
         return $this->successMethod();
     }
@@ -247,17 +291,9 @@ class WebhookController extends Controller
      */
     protected function handleCustomerDeleted(array $payload)
     {
-        if ($user = $this->getUserByStripeId($payload['data']['object']['id'])) {
-            $user->subscriptions->each(function (Subscription $subscription) {
-                $subscription->skipTrial()->markAsCanceled();
-            });
-
-            $user->forceFill([
-                'stripe_id' => null,
-                'trial_ends_at' => null,
-                'pm_type' => null,
-                'pm_last_four' => null,
-            ])->save();
+        $stripeData = StripeData::where('stripe_id', $payload['data']['object']['id'])->first();
+        if ($stripeData) {
+            $stripeData->deleteQuietly();
         }
 
         return $this->successMethod();
@@ -271,7 +307,7 @@ class WebhookController extends Controller
      */
     protected function handlePaymentMethodAutomaticallyUpdated(array $payload)
     {
-        if ($user = $this->getUserByStripeId($payload['data']['object']['customer'])) {
+        if ($user = $this->getModelByStripeId($payload['data']['object']['customer'])) {
             $user->updateDefaultPaymentMethodFromStripe();
         }
 
@@ -298,7 +334,7 @@ class WebhookController extends Controller
             return $this->successMethod();
         }
 
-        if ($user = $this->getUserByStripeId($payload['data']['object']['customer'])) {
+        if ($user = $this->getModelByStripeId($payload['data']['object']['customer'])) {
             if (in_array(Notifiable::class, class_uses_recursive($user))) {
                 $payment = new Payment($user->stripe()->paymentIntents->retrieve(
                     $payload['data']['object']['payment_intent']
@@ -312,14 +348,15 @@ class WebhookController extends Controller
     }
 
     /**
-     * Get the customer instance by Stripe ID.
+     * Get the stripeable model by Stripe ID.
      *
      * @param  string|null  $stripeId
-     * @return \BitbossHub\Cashier\Billable|null
+     * @return Model|null
      */
-    protected function getUserByStripeId($stripeId)
+    protected function getModelByStripeId($stripeId)
     {
-        return Cashier::findBillable($stripeId);
+        $stripeData = Cashier::findStripeData($stripeId);
+        return $stripeData?->stripeable;
     }
 
     /**

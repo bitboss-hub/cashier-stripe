@@ -189,7 +189,7 @@ class Payment implements Arrayable, Jsonable, JsonSerializable
             return $this->customer;
         }
 
-        return $this->customer = Cashier::findBillable($this->paymentIntent->customer);
+        return $this->customer = Cashier::findStripeData($this->paymentIntent->customer);
     }
 
     /**

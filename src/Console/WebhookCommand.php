@@ -8,15 +8,23 @@ use BitbossHub\Cashier\Cashier;
 class WebhookCommand extends Command
 {
     public const DEFAULT_EVENTS = [
-        'customer.subscription.created',
-        'customer.subscription.updated',
-        'customer.subscription.deleted',
+        'customer.created',
         'customer.updated',
         'customer.deleted',
-        'payment_method.automatically_updated',
-        'invoice.payment_action_required',
-        'invoice.payment_succeeded',
     ];
+
+//    public const DEFAULT_EVENTS = [
+//        'customer.subscription.created',
+//        'customer.subscription.updated',
+//        'customer.subscription.deleted',
+//        'customer.created',
+//        'customer.updated',
+//        'customer.deleted',
+//        'payment_method.automatically_updated',
+//        'invoice.payment_action_required',
+//        'invoice.payment_succeeded',
+//    ];
+
 
     /**
      * The name and signature of the console command.
