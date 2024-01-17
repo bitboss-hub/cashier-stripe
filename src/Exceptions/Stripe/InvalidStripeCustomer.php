@@ -1,13 +1,13 @@
 <?php
 
-namespace BitbossHub\Cashier\Exceptions;
+namespace BitbossHub\Cashier\Exceptions\Stripe;
 
 use Exception;
 
-class InvalidCustomer extends Exception
+class InvalidStripeCustomer extends Exception
 {
     /**
-     * Create a new InvalidCustomer instance.
+     * Create a new InvalidStripeCustomer instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $owner
      * @return static

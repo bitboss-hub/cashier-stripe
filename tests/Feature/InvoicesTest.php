@@ -2,7 +2,7 @@
 
 namespace BitbossHub\Cashier\Tests\Feature;
 
-use BitbossHub\Cashier\Exceptions\InvalidCustomer;
+use BitbossHub\Cashier\Exceptions\Stripe\InvalidStripeCustomer;
 use BitbossHub\Cashier\Exceptions\InvalidInvoice;
 use BitbossHub\Cashier\Invoice;
 use Stripe\InvoiceItem as StripeInvoiceItem;
@@ -14,7 +14,7 @@ class InvoicesTest extends FeatureTestCase
     {
         $user = $this->createCustomer('require_stripe_customer_for_invoicing');
 
-        $this->expectException(InvalidCustomer::class);
+        $this->expectException(InvalidStripeCustomer::class);
 
         $user->invoice();
     }

@@ -13,7 +13,13 @@ return new class extends Migration
             $table->id();
             $table->string('stripeable_type');
             $table->unsignedBigInteger('stripeable_id');
-            $table->string('stripe_id')->nullable();
+            $table->string('stripe_id');
+            $table->string('email')->nullable();
+            $table->string('name')->nullable();
+            $table->string('phone')->nullable();
+            $table->json('address')->nullable();
+            $table->string('description')->nullable();
+            $table->json('metadata')->nullable();
             $table->timestamps();
         });
     }

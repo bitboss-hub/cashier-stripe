@@ -3,8 +3,8 @@
 namespace BitbossHub\Cashier\Tests\Unit;
 
 use Carbon\Carbon;
-use BitbossHub\Cashier\Exceptions\StripeCustomerAlreadyCreated;
-use BitbossHub\Cashier\Exceptions\InvalidCustomer;
+use BitbossHub\Cashier\Exceptions\Stripe\StripeCustomerAlreadyCreated;
+use BitbossHub\Cashier\Exceptions\Stripe\InvalidStripeCustomer;
 use BitbossHub\Cashier\Tests\Fixtures\User;
 use PHPUnit\Framework\TestCase;
 
@@ -59,7 +59,7 @@ class CustomerTest extends TestCase
     {
         $user = new User;
 
-        $this->expectException(InvalidCustomer::class);
+        $this->expectException(InvalidStripeCustomer::class);
 
         $user->asStripeCustomer();
     }

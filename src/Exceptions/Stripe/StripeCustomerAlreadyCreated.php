@@ -1,6 +1,6 @@
 <?php
 
-namespace BitbossHub\Cashier\Exceptions;
+namespace BitbossHub\Cashier\Exceptions\Stripe;
 
 use Exception;
 

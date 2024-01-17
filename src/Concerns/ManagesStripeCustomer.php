@@ -2,6 +2,7 @@
 
 namespace BitbossHub\Cashier\Concerns;
 
+use BitbossHub\Cashier\Exceptions\Stripe\InvalidStripeData;
 use BitbossHub\Cashier\Models\StripeData;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Http\RedirectResponse;
@@ -9,14 +10,18 @@ use Illuminate\Support\Collection;
 use BitbossHub\Cashier\Cashier;
 use BitbossHub\Cashier\CustomerBalanceTransaction;
 use BitbossHub\Cashier\Discount;
-use BitbossHub\Cashier\Exceptions\StripeCustomerAlreadyCreated;
-use BitbossHub\Cashier\Exceptions\InvalidCustomer;
+use BitbossHub\Cashier\Exceptions\Stripe\StripeCustomerAlreadyCreated;
+use BitbossHub\Cashier\Exceptions\Stripe\InvalidStripeCustomer;
 use BitbossHub\Cashier\PromotionCode;
+use Illuminate\Support\Facades\Validator;
 use Stripe\Customer as StripeCustomer;
 use Stripe\Exception\InvalidRequestException as StripeInvalidRequestException;
+use BitbossHub\Cashier\Rules\Stripe\StripeDataUpsertRule;
 
 trait ManagesStripeCustomer
 {
+    protected $with = ['stripeData'];
+
     /**
      * Get the model's Stripe Data.
      */
@@ -33,8 +38,12 @@ trait ManagesStripeCustomer
      */
     private function createLocalStripeData(StripeCustomer $customer, array $options = []): StripeData
     {
-        $stripeData = new StripeData();
-        $stripeData->stripe_id = $customer->id;
+        $attributes = array_merge($options, ['stripe_id' => $customer->id]);
+        $validator = Validator::make($attributes, StripeDataUpsertRule::rule());
+        if ($validator->fails()) {
+            throw InvalidStripeData::message($validator->errors()->getMessages());
+        }
+        $stripeData = new StripeData($attributes);
         $this->stripeData()->save($stripeData);
         return $stripeData;
     }
@@ -64,12 +73,12 @@ trait ManagesStripeCustomer
      *
      * @return void
      *
-     * @throws \BitbossHub\Cashier\Exceptions\InvalidCustomer
+     * @throws \BitbossHub\Cashier\Exceptions\Stripe\InvalidStripeCustomer
      */
     protected function assertCustomerExists()
     {
         if (! $this->hasStripeId()) {
-            throw InvalidCustomer::notYetCreated($this);
+            throw InvalidStripeCustomer::notYetCreated($this);
         }
     }
 
@@ -97,6 +106,10 @@ trait ManagesStripeCustomer
 
         if (! array_key_exists('phone', $options) && $phone = $this->stripePhone()) {
             $options['phone'] = $phone;
+        }
+
+        if (! array_key_exists('description', $options) && $description = $this->stripeDescription()) {
+            $options['description'] = $description;
         }
 
         if (! array_key_exists('address', $options) && $address = $this->stripeAddress()) {
@@ -129,7 +142,7 @@ trait ManagesStripeCustomer
     public function updateStripeCustomer(array $options = [])
     {
         return static::stripe()->customers->update(
-            $this->stripe_id, $options
+            $this->stripeData?->stripe_id, $options
         );
     }
 
@@ -159,7 +172,7 @@ trait ManagesStripeCustomer
         $this->assertCustomerExists();
 
         return static::stripe()->customers->retrieve(
-            $this->stripe_id, ['expand' => $expand]
+            $this->stripeData?->stripe_id, ['expand' => $expand]
         );
     }
 
@@ -170,7 +183,7 @@ trait ManagesStripeCustomer
      */
     public function stripeName()
     {
-        return $this->name ?? null;
+        return $this->stripeData?->name ?? null;
     }
 
     /**
@@ -180,7 +193,7 @@ trait ManagesStripeCustomer
      */
     public function stripeEmail()
     {
-        return $this->email ?? null;
+        return $this->stripeData?->email ?? null;
     }
 
     /**
@@ -190,7 +203,17 @@ trait ManagesStripeCustomer
      */
     public function stripePhone()
     {
-        return $this->phone ?? null;
+        return $this->stripeData?->phone ?? null;
+    }
+
+    /**
+     * Get the description that should be synced to Stripe.
+     *
+     * @return string|null
+     */
+    public function stripeDescription()
+    {
+        return $this->stripeData?->description ?? null;
     }
 
     /**
@@ -248,7 +271,20 @@ trait ManagesStripeCustomer
             'address' => $this->stripeAddress(),
             'preferred_locales' => $this->stripePreferredLocales(),
             'metadata' => $this->stripeMetadata(),
+            'description' => $this->stripeDescription(),
         ]);
+    }
+
+    /**
+     * Sync the local customer's information from Stripe.
+     *
+     * @return StripeData
+     */
+    public function syncLocalStripeCustomerDetails(array $attributes): StripeData
+    {
+        $stripeData = $this->stripeData;
+        $stripeData->updateQuietly($attributes);
+        return $stripeData;
     }
 
     /**
