@@ -2,6 +2,7 @@
 
 namespace BitbossHub\Cashier;
 
+use BitBoss\Scrooge\Utilities\Gateways\Stripe;
 use BitbossHub\Cashier\Models\StripeData;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Money\Currencies\ISOCurrencies;
@@ -119,13 +120,7 @@ class Cashier
      */
     public static function stripe(array $options = [])
     {
-        $config = array_merge([
-            'api_key' => $options['api_key'] ?? config('cashier.secret'),
-            'stripe_version' => static::STRIPE_VERSION,
-            'api_base' => static::$apiBaseUrl,
-        ], $options);
-
-        return app(StripeClient::class, ['config' => $config]);
+        return Stripe::stripe($options);
     }
 
     /**

@@ -2,8 +2,11 @@
 
 namespace BitbossHub\Cashier\Utilities\Gateways;
 
+use BitbossHub\Cashier\Models\StripeData;
 use Stripe\BaseStripeClient;
 use Stripe\Collection;
+use Stripe\Customer;
+use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 
 class Stripe
@@ -23,13 +26,15 @@ class Stripe
    * @param  array  $options
    * @return \Stripe\StripeClient
    */
-  public static function stripe(array $options = []): StripeClient
+  public static function stripe(array $options = [])
   {
-    return new StripeClient(array_merge([
+    $config = array_merge([
       'api_key' => $options['api_key'] ?? config('cashier.secret'),
       'stripe_version' => static::STRIPE_VERSION,
       'api_base' => static::$apiBaseUrl,
-    ], $options));
+    ], $options);
+
+    return app(StripeClient::class, ['config' => $config]);
   }
 
   /**
@@ -45,5 +50,17 @@ class Stripe
   {
     $client = self::stripe();
     return $client->customers->all($params, $opts);
+  }
+
+  /**
+   * Deletes remote stripe customer
+   * @param StripeData $stripeData
+   * @return Customer
+   * @throws ApiErrorException
+   */
+  public static function deleteStripeCustomer(StripeData $stripeData): Customer
+  {
+    $client = self::stripe();
+    return $client->customers->delete($stripeData->stripe_id);
   }
 }
