@@ -29,8 +29,6 @@ class InvoiceLineItem implements Arrayable, Jsonable, JsonSerializable
     /**
      * Create a new invoice line item instance.
      *
-     * @param  \BitbossHub\Cashier\Invoice  $invoice
-     * @param  \Stripe\InvoiceLineItem  $item
      * @return void
      */
     public function __construct(Invoice $invoice, StripeInvoiceLineItem $item)

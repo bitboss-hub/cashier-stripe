@@ -20,7 +20,6 @@ class Discount implements Arrayable, Jsonable, JsonSerializable
     /**
      * Create a new Discount instance.
      *
-     * @param  \Stripe\Discount  $discount
      * @return void
      */
     public function __construct(StripeDiscount $discount)

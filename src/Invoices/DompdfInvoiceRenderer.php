@@ -2,10 +2,10 @@
 
 namespace BitbossHub\Cashier\Invoices;
 
-use Dompdf\Dompdf;
-use Dompdf\Options;
 use BitbossHub\Cashier\Contracts\InvoiceRenderer;
 use BitbossHub\Cashier\Invoice;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class DompdfInvoiceRenderer implements InvoiceRenderer
 {

@@ -29,7 +29,6 @@ class Checkout implements Arrayable, Jsonable, JsonSerializable, Responsable
      * Create a new checkout session instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model|null  $owner
-     * @param  \Stripe\Checkout\Session  $session
      * @return void
      */
     public function __construct($owner, Session $session)
@@ -64,8 +63,6 @@ class Checkout implements Arrayable, Jsonable, JsonSerializable, Responsable
      * Begin a new checkout session.
      *
      * @param  \Illuminate\Database\Eloquent\Model|null  $owner
-     * @param  array  $sessionOptions
-     * @param  array  $customerOptions
      * @return \BitbossHub\Cashier\Checkout
      */
     public static function create($owner, array $sessionOptions = [], array $customerOptions = [])

@@ -25,7 +25,6 @@ class CustomerBalanceTransaction
      * Create a new CustomerBalanceTransaction instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $owner
-     * @param  \Stripe\CustomerBalanceTransaction  $transaction
      * @return void
      *
      * @throws \BitbossHub\Cashier\Exceptions\InvalidCustomerBalanceTransaction

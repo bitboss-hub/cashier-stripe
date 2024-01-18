@@ -2,8 +2,8 @@
 
 namespace BitbossHub\Cashier\Exceptions;
 
-use Exception;
 use BitbossHub\Cashier\Payment;
+use Exception;
 use Throwable;
 
 class IncompletePayment extends Exception
@@ -18,13 +18,11 @@ class IncompletePayment extends Exception
     /**
      * Create a new IncompletePayment instance.
      *
-     * @param  \BitbossHub\Cashier\Payment  $payment
      * @param  string  $message
      * @param  int  $code
-     * @param  \Throwable|null  $previous
      * @return void
      */
-    public function __construct(Payment $payment, $message = '', $code = 0, Throwable $previous = null)
+    public function __construct(Payment $payment, $message = '', $code = 0, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
 
@@ -34,7 +32,6 @@ class IncompletePayment extends Exception
     /**
      * Create a new IncompletePayment instance with a `payment_action_required` type.
      *
-     * @param  \BitbossHub\Cashier\Payment  $payment
      * @return static
      */
     public static function paymentMethodRequired(Payment $payment)
@@ -48,7 +45,6 @@ class IncompletePayment extends Exception
     /**
      * Create a new IncompletePayment instance with a `requires_action` type.
      *
-     * @param  \BitbossHub\Cashier\Payment  $payment
      * @return static
      */
     public static function requiresAction(Payment $payment)
@@ -62,7 +58,6 @@ class IncompletePayment extends Exception
     /**
      * Create a new IncompletePayment instance with a `requires_confirmation` type.
      *
-     * @param  \BitbossHub\Cashier\Payment  $payment
      * @return static
      */
     public static function requiresConfirmation(Payment $payment)

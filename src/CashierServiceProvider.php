@@ -2,11 +2,13 @@
 
 namespace BitbossHub\Cashier;
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
 use BitbossHub\Cashier\Console\WebhookCommand;
 use BitbossHub\Cashier\Contracts\InvoiceRenderer;
 use BitbossHub\Cashier\Invoices\DompdfInvoiceRenderer;
+use BitbossHub\Cashier\Models\StripeData;
+use BitbossHub\Cashier\Observers\StripeDataObserver;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
 use Stripe\Stripe;
 use Stripe\Util\LoggerInterface;
 
@@ -19,11 +21,12 @@ class CashierServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//        $this->registerLogger();
+        //        $this->registerLogger();
         $this->registerRoutes();
-//        $this->registerResources();
+        //        $this->registerResources();
         $this->registerPublishing();
-//        $this->registerCommands();
+        //        $this->registerCommands();
+        $this->registerObservers();
 
         Stripe::setAppInfo(
             'BitbossHub Cashier',
@@ -40,8 +43,8 @@ class CashierServiceProvider extends ServiceProvider
     public function register()
     {
         $this->configure();
-//        $this->bindLogger();
-//        $this->bindInvoiceRenderer();
+        //        $this->bindLogger();
+        //        $this->bindInvoiceRenderer();
     }
 
     /**
@@ -160,5 +163,15 @@ class CashierServiceProvider extends ServiceProvider
                 WebhookCommand::class,
             ]);
         }
+    }
+
+    /**
+     * Register the package's observers.
+     *
+     * @return void
+     */
+    protected function registerObservers()
+    {
+        StripeData::observe(StripeDataObserver::class);
     }
 }

@@ -2,11 +2,11 @@
 
 namespace BitbossHub\Cashier\Notifications;
 
+use BitbossHub\Cashier\Payment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use BitbossHub\Cashier\Payment;
 
 class ConfirmPayment extends Notification implements ShouldQueue
 {
@@ -29,7 +29,6 @@ class ConfirmPayment extends Notification implements ShouldQueue
     /**
      * Create a new payment confirmation notification.
      *
-     * @param  \BitbossHub\Cashier\Payment  $payment
      * @return void
      */
     public function __construct(Payment $payment)

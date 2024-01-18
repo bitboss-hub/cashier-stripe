@@ -2,14 +2,14 @@
 
 namespace BitbossHub\Cashier\Concerns;
 
+use BitbossHub\Cashier\Exceptions\InvalidInvoice;
+use BitbossHub\Cashier\Invoice;
+use BitbossHub\Cashier\Payment;
 use Illuminate\Pagination\Cursor;
 use Illuminate\Pagination\CursorPaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use BitbossHub\Cashier\Exceptions\InvalidInvoice;
-use BitbossHub\Cashier\Invoice;
-use BitbossHub\Cashier\Payment;
 use LogicException;
 use Stripe\Exception\CardException as StripeCardException;
 use Stripe\Exception\InvalidRequestException as StripeInvalidRequestException;
@@ -23,7 +23,6 @@ trait ManagesInvoices
      *
      * @param  string  $description
      * @param  int  $amount
-     * @param  array  $options
      * @return \Stripe\InvoiceItem
      */
     public function tab($description, $amount, array $options = [])
@@ -59,8 +58,6 @@ trait ManagesInvoices
      *
      * @param  string  $description
      * @param  int  $amount
-     * @param  array  $tabOptions
-     * @param  array  $invoiceOptions
      * @return \BitbossHub\Cashier\Invoice
      *
      * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
@@ -77,7 +74,6 @@ trait ManagesInvoices
      *
      * @param  string  $price
      * @param  int  $quantity
-     * @param  array  $options
      * @return \Stripe\InvoiceItem
      */
     public function tabPrice($price, $quantity = 1, array $options = [])
@@ -98,8 +94,6 @@ trait ManagesInvoices
      *
      * @param  string  $price
      * @param  int  $quantity
-     * @param  array  $tabOptions
-     * @param  array  $invoiceOptions
      * @return \BitbossHub\Cashier\Invoice
      *
      * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
@@ -114,7 +108,6 @@ trait ManagesInvoices
     /**
      * Invoice the customer outside of the regular billing cycle.
      *
-     * @param  array  $options
      * @return \BitbossHub\Cashier\Invoice
      *
      * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
@@ -153,7 +146,6 @@ trait ManagesInvoices
     /**
      * Create an invoice within Stripe.
      *
-     * @param  array  $options
      * @return \BitbossHub\Cashier\Invoice
      */
     public function createInvoice(array $options = [])
@@ -184,7 +176,6 @@ trait ManagesInvoices
     /**
      * Get the customer's upcoming invoice.
      *
-     * @param  array  $options
      * @return \BitbossHub\Cashier\Invoice|null
      */
     public function upcomingInvoice(array $options = [])
@@ -254,7 +245,6 @@ trait ManagesInvoices
      * Create an invoice download Response.
      *
      * @param  string  $id
-     * @param  array  $data
      * @param  string  $filename
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -303,7 +293,6 @@ trait ManagesInvoices
     /**
      * Get an array of the customer's invoices, including pending invoices.
      *
-     * @param  array  $parameters
      * @return \Illuminate\Support\Collection|\BitbossHub\Cashier\Invoice[]
      */
     public function invoicesIncludingPending(array $parameters = [])
@@ -315,7 +304,6 @@ trait ManagesInvoices
      * Get a cursor paginator for the customer's invoices.
      *
      * @param  int|null  $perPage
-     * @param  array  $parameters
      * @param  string  $cursorName
      * @param  \Illuminate\Pagination\Cursor|string|null  $cursor
      * @return \Illuminate\Contracts\Pagination\CursorPaginator

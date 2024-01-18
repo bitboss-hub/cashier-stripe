@@ -32,7 +32,6 @@ class Tax
      *
      * @param  int  $amount
      * @param  string  $currency
-     * @param  \Stripe\TaxRate  $taxRate
      * @return void
      */
     public function __construct($amount, $currency, StripeTaxRate $taxRate)

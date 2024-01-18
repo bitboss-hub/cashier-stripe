@@ -2,10 +2,10 @@
 
 namespace BitbossHub\Cashier\Concerns;
 
-use Carbon\Carbon;
 use BitbossHub\Cashier\Cashier;
 use BitbossHub\Cashier\Subscription;
 use BitbossHub\Cashier\SubscriptionBuilder;
+use Carbon\Carbon;
 
 trait ManagesSubscriptions
 {

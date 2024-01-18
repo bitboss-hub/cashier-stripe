@@ -2,8 +2,8 @@
 
 namespace BitbossHub\Cashier;
 
-use BitBoss\Scrooge\Utilities\Gateways\Stripe;
 use BitbossHub\Cashier\Models\StripeData;
+use BitbossHub\Cashier\Utilities\Gateways\Stripe;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Money\Currencies\ISOCurrencies;
 use Money\Currency;
@@ -12,7 +12,6 @@ use Money\Money;
 use NumberFormatter;
 use Stripe\BaseStripeClient;
 use Stripe\Customer as StripeCustomer;
-use Stripe\StripeClient;
 
 class Cashier
 {
@@ -103,11 +102,11 @@ class Cashier
     {
         $stripeId = $stripeId instanceof StripeCustomer ? $stripeId->id : $stripeId;
 
-//        $model = static::$customerModel;
-//
-//        $builder = in_array(SoftDeletes::class, class_uses_recursive($model))
-//            ? $model::withTrashed()
-//            : new $model;
+        //        $model = static::$customerModel;
+        //
+        //        $builder = in_array(SoftDeletes::class, class_uses_recursive($model))
+        //            ? $model::withTrashed()
+        //            : new $model;
 
         return $stripeId ? StripeData::where('stripe_id', $stripeId)->first() : null;
     }
@@ -115,7 +114,6 @@ class Cashier
     /**
      * Get the Stripe SDK client.
      *
-     * @param  array  $options
      * @return \Stripe\StripeClient
      */
     public static function stripe(array $options = [])
@@ -126,7 +124,6 @@ class Cashier
     /**
      * Set the custom currency formatter.
      *
-     * @param  callable  $callback
      * @return void
      */
     public static function formatCurrencyUsing(callable $callback)
@@ -140,7 +137,6 @@ class Cashier
      * @param  int  $amount
      * @param  string|null  $currency
      * @param  string|null  $locale
-     * @param  array  $options
      * @return string
      */
     public static function formatAmount($amount, $currency = null, $locale = null, array $options = [])

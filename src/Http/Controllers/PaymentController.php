@@ -2,11 +2,11 @@
 
 namespace BitbossHub\Cashier\Http\Controllers;
 
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Arr;
 use BitbossHub\Cashier\Cashier;
 use BitbossHub\Cashier\Http\Middleware\VerifyRedirectUrl;
 use BitbossHub\Cashier\Payment;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Arr;
 
 class PaymentController extends Controller
 {

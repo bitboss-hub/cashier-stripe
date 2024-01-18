@@ -16,7 +16,6 @@ trait PerformsCharges
      *
      * @param  int  $amount
      * @param  string  $paymentMethod
-     * @param  array  $options
      * @return \BitbossHub\Cashier\Payment
      *
      * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
@@ -41,7 +40,6 @@ trait PerformsCharges
      * Create a new PaymentIntent instance.
      *
      * @param  int  $amount
-     * @param  array  $options
      * @return \BitbossHub\Cashier\Payment
      */
     public function pay($amount, array $options = [])
@@ -57,8 +55,6 @@ trait PerformsCharges
      * Create a new PaymentIntent instance for the given payment method types.
      *
      * @param  int  $amount
-     * @param  array  $paymentMethods
-     * @param  array  $options
      * @return \BitbossHub\Cashier\Payment
      */
     public function payWith($amount, array $paymentMethods, array $options = [])
@@ -74,7 +70,6 @@ trait PerformsCharges
      * Create a new Payment instance with a Stripe PaymentIntent.
      *
      * @param  int  $amount
-     * @param  array  $options
      * @return \BitbossHub\Cashier\Payment
      */
     public function createPayment($amount, array $options = [])
@@ -117,7 +112,6 @@ trait PerformsCharges
      * Refund a customer for a charge.
      *
      * @param  string  $paymentIntent
-     * @param  array  $options
      * @return \Stripe\Refund
      */
     public function refund($paymentIntent, array $options = [])
@@ -131,8 +125,6 @@ trait PerformsCharges
      * Begin a new checkout session for existing prices.
      *
      * @param  array|string  $items
-     * @param  array  $sessionOptions
-     * @param  array  $customerOptions
      * @return \BitbossHub\Cashier\Checkout
      */
     public function checkout($items, array $sessionOptions = [], array $customerOptions = [])
@@ -146,9 +138,6 @@ trait PerformsCharges
      * @param  int  $amount
      * @param  string  $name
      * @param  int  $quantity
-     * @param  array  $sessionOptions
-     * @param  array  $customerOptions
-     * @param  array  $productData
      * @return \BitbossHub\Cashier\Checkout
      */
     public function checkoutCharge($amount, $name, $quantity = 1, array $sessionOptions = [], array $customerOptions = [], array $productData = [])

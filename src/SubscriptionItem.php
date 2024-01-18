@@ -2,14 +2,14 @@
 
 namespace BitbossHub\Cashier;
 
-use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use BitbossHub\Cashier\Concerns\HandlesPaymentFailures;
 use BitbossHub\Cashier\Concerns\InteractsWithPaymentBehavior;
 use BitbossHub\Cashier\Concerns\Prorates;
 use BitbossHub\Cashier\Database\Factories\SubscriptionItemFactory;
+use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * @property \BitbossHub\Cashier\Subscription|null $subscription
@@ -140,7 +140,6 @@ class SubscriptionItem extends Model
      * Swap the subscription item to a new Stripe price.
      *
      * @param  string  $price
-     * @param  array  $options
      * @return $this
      *
      * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
@@ -189,7 +188,6 @@ class SubscriptionItem extends Model
      * Swap the subscription item to a new Stripe price, and invoice immediately.
      *
      * @param  string  $price
-     * @param  array  $options
      * @return $this
      *
      * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
@@ -236,7 +234,6 @@ class SubscriptionItem extends Model
     /**
      * Update the underlying Stripe subscription item information for the model.
      *
-     * @param  array  $options
      * @return \Stripe\SubscriptionItem
      */
     public function updateStripeSubscriptionItem(array $options = [])
@@ -249,7 +246,6 @@ class SubscriptionItem extends Model
     /**
      * Get the subscription as a Stripe subscription item object.
      *
-     * @param  array  $expand
      * @return \Stripe\SubscriptionItem
      */
     public function asStripeSubscriptionItem(array $expand = [])

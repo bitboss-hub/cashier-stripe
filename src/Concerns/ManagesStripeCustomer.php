@@ -2,21 +2,21 @@
 
 namespace BitbossHub\Cashier\Concerns;
 
-use BitbossHub\Cashier\Exceptions\Stripe\InvalidStripeData;
-use BitbossHub\Cashier\Models\StripeData;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Collection;
 use BitbossHub\Cashier\Cashier;
 use BitbossHub\Cashier\CustomerBalanceTransaction;
 use BitbossHub\Cashier\Discount;
-use BitbossHub\Cashier\Exceptions\Stripe\StripeCustomerAlreadyCreated;
 use BitbossHub\Cashier\Exceptions\Stripe\InvalidStripeCustomer;
+use BitbossHub\Cashier\Exceptions\Stripe\InvalidStripeData;
+use BitbossHub\Cashier\Exceptions\Stripe\StripeCustomerAlreadyCreated;
+use BitbossHub\Cashier\Models\StripeData;
 use BitbossHub\Cashier\PromotionCode;
+use BitbossHub\Cashier\Rules\Stripe\StripeDataUpsertRule;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Stripe\Customer as StripeCustomer;
 use Stripe\Exception\InvalidRequestException as StripeInvalidRequestException;
-use BitbossHub\Cashier\Rules\Stripe\StripeDataUpsertRule;
 
 trait ManagesStripeCustomer
 {
@@ -30,9 +30,8 @@ trait ManagesStripeCustomer
 
     /**
      * Creates stripe data
-     * @param StripeCustomer|string $customer
-     * @param array $options
-     * @return StripeData
+     *
+     * @param  StripeCustomer|string  $customer
      */
     public function createLocalStripeData($customer, array $options = []): StripeData
     {
@@ -44,6 +43,7 @@ trait ManagesStripeCustomer
         }
         $stripeData = new StripeData($attributes);
         $this->stripeData()->save($stripeData);
+
         return $stripeData;
     }
 
@@ -84,7 +84,6 @@ trait ManagesStripeCustomer
     /**
      * Create a Stripe customer for the given model.
      *
-     * @param  array  $options
      * @return \Stripe\Customer
      *
      * @throws \BitbossHub\Cashier\Exceptions\StripeCustomerAlreadyCreated
@@ -121,7 +120,7 @@ trait ManagesStripeCustomer
 
         $modelMetaData = [
             'model_type' => get_class($this),
-            'model_id' => $this->id
+            'model_id' => $this->id,
         ];
 
         if (! array_key_exists('metadata', $options) && $metadata = $this->stripeMetadata()) {
@@ -142,7 +141,6 @@ trait ManagesStripeCustomer
     /**
      * Update the underlying Stripe customer information for the model.
      *
-     * @param  array  $options
      * @return \Stripe\Customer
      */
     public function updateStripeCustomer(array $options = [])
@@ -155,7 +153,6 @@ trait ManagesStripeCustomer
     /**
      * Get the Stripe customer instance for the current user or create one.
      *
-     * @param  array  $options
      * @return \Stripe\Customer
      */
     public function createOrGetStripeCustomer(array $options = [])
@@ -170,7 +167,6 @@ trait ManagesStripeCustomer
     /**
      * Get the Stripe customer for the model.
      *
-     * @param  array  $expand
      * @return \Stripe\Customer
      */
     public function asStripeCustomer(array $expand = [])
@@ -274,13 +270,12 @@ trait ManagesStripeCustomer
 
     /**
      * Sync the local customer's information from Stripe.
-     *
-     * @return StripeData
      */
     public function syncLocalStripeCustomerDetails(array $attributes): StripeData
     {
         $stripeData = $this->stripeData;
         $stripeData->updateQuietly($attributes);
+
         return $stripeData;
     }
 
@@ -332,7 +327,6 @@ trait ManagesStripeCustomer
      * Retrieve a promotion code by its code.
      *
      * @param  string  $code
-     * @param  array  $options
      * @return \BitbossHub\Cashier\PromotionCode|null
      */
     public function findPromotionCode($code, array $options = [])
@@ -351,7 +345,6 @@ trait ManagesStripeCustomer
      * Retrieve a promotion code by its code.
      *
      * @param  string  $code
-     * @param  array  $options
      * @return \BitbossHub\Cashier\PromotionCode|null
      */
     public function findActivePromotionCode($code, array $options = [])
@@ -387,7 +380,6 @@ trait ManagesStripeCustomer
      * Return a customer's balance transactions.
      *
      * @param  int  $limit
-     * @param  array  $options
      * @return \Illuminate\Support\Collection
      */
     public function balanceTransactions($limit = 10, array $options = [])
@@ -410,7 +402,6 @@ trait ManagesStripeCustomer
      *
      * @param  int  $amount
      * @param  string|null  $description
-     * @param  array  $options
      * @return \BitbossHub\Cashier\CustomerBalanceTransaction
      */
     public function creditBalance($amount, $description = null, array $options = [])
@@ -423,7 +414,6 @@ trait ManagesStripeCustomer
      *
      * @param  int  $amount
      * @param  string|null  $description
-     * @param  array  $options
      * @return \BitbossHub\Cashier\CustomerBalanceTransaction
      */
     public function debitBalance($amount, $description = null, array $options = [])
@@ -436,7 +426,6 @@ trait ManagesStripeCustomer
      *
      * @param  int  $amount
      * @param  string|null  $description
-     * @param  array  $options
      * @return \BitbossHub\Cashier\CustomerBalanceTransaction
      */
     public function applyBalance($amount, $description = null, array $options = [])
@@ -479,7 +468,6 @@ trait ManagesStripeCustomer
      * Get the Stripe billing portal for this customer.
      *
      * @param  string|null  $returnUrl
-     * @param  array  $options
      * @return string
      */
     public function billingPortalUrl($returnUrl = null, array $options = [])
@@ -496,7 +484,6 @@ trait ManagesStripeCustomer
      * Generate a redirect response to the customer's Stripe billing portal.
      *
      * @param  string|null  $returnUrl
-     * @param  array  $options
      * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectToBillingPortal($returnUrl = null, array $options = [])
@@ -605,7 +592,6 @@ trait ManagesStripeCustomer
     /**
      * Get the Stripe SDK client.
      *
-     * @param  array  $options
      * @return \Stripe\StripeClient
      */
     public static function stripe(array $options = [])

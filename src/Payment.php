@@ -2,11 +2,11 @@
 
 namespace BitbossHub\Cashier;
 
+use BitbossHub\Cashier\Exceptions\IncompletePayment;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Traits\ForwardsCalls;
 use JsonSerializable;
-use BitbossHub\Cashier\Exceptions\IncompletePayment;
 use Stripe\PaymentIntent as StripePaymentIntent;
 
 class Payment implements Arrayable, Jsonable, JsonSerializable
@@ -30,7 +30,6 @@ class Payment implements Arrayable, Jsonable, JsonSerializable
     /**
      * Create a new Payment instance.
      *
-     * @param  \Stripe\PaymentIntent  $paymentIntent
      * @return void
      */
     public function __construct(StripePaymentIntent $paymentIntent)
@@ -71,7 +70,6 @@ class Payment implements Arrayable, Jsonable, JsonSerializable
     /**
      * Capture a payment that is being held for the customer.
      *
-     * @param  array  $options
      * @return \Stripe\PaymentIntent
      */
     public function capture(array $options = [])
@@ -122,7 +120,6 @@ class Payment implements Arrayable, Jsonable, JsonSerializable
     /**
      * Cancel the payment.
      *
-     * @param  array  $options
      * @return \Stripe\PaymentIntent
      */
     public function cancel(array $options = [])
@@ -195,7 +192,6 @@ class Payment implements Arrayable, Jsonable, JsonSerializable
     /**
      * The Stripe PaymentIntent instance.
      *
-     * @param  array  $expand
      * @return \Stripe\PaymentIntent
      */
     public function asStripePaymentIntent(array $expand = [])

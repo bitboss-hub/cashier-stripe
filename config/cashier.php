@@ -122,8 +122,9 @@ return [
     */
 
     'logger' => env('CASHIER_LOGGER'),
-  'gateway' => env('CASHIER_GATEWAY', GatewaysEnum::STRIPE->value),
-  'database' => [
-    'table_prefix' => env('CASHIER_DATABASE_TABLE_PREFIX', 'cashier_')
-  ],
+    'gateway' => env('CASHIER_GATEWAY', GatewaysEnum::STRIPE->value),
+    'database' => [
+        'table_prefix' => env('CASHIER_DATABASE_TABLE_PREFIX', 'cashier_')
+    ],
+    'observers' => env('CASHIER_OBSERVERS', true)
 ];

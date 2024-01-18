@@ -2,9 +2,9 @@
 
 namespace BitbossHub\Cashier\Concerns;
 
+use BitbossHub\Cashier\PaymentMethod;
 use Exception;
 use Illuminate\Support\Collection;
-use BitbossHub\Cashier\PaymentMethod;
 use Stripe\BankAccount as StripeBankAccount;
 use Stripe\Card as StripeCard;
 use Stripe\PaymentMethod as StripePaymentMethod;
@@ -14,7 +14,6 @@ trait ManagesPaymentMethods
     /**
      * Create a new SetupIntent instance.
      *
-     * @param  array  $options
      * @return \Stripe\SetupIntent
      */
     public function createSetupIntent(array $options = [])
@@ -29,9 +28,6 @@ trait ManagesPaymentMethods
     /**
      * Retrieve a SetupIntent from Stripe.
      *
-     * @param  string  $id
-     * @param  array  $params
-     * @param  array  $options
      * @return \Stripe\SetupIntent
      */
     public function findSetupIntent(string $id, array $params = [], array $options = [])

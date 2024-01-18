@@ -27,7 +27,6 @@ trait HandlesPaymentFailures
     /**
      * Handle a failed payment for the given subscription.
      *
-     * @param  \BitbossHub\Cashier\Subscription  $subscription
      * @param  \Stripe\PaymentMethod|string|null  $paymentMethod
      * @return void
      *
@@ -95,7 +94,6 @@ trait HandlesPaymentFailures
     /**
      * Specify the options to be used when confirming a payment intent.
      *
-     * @param  array  $options
      * @return $this
      */
     public function withPaymentConfirmationOptions(array $options)

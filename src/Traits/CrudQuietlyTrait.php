@@ -7,8 +7,6 @@ trait CrudQuietlyTrait
     /**
      * Create the model without firing any model events
      *
-     * @param array $attributes
-     * @param array $options
      *
      * @return mixed
      */
@@ -22,8 +20,6 @@ trait CrudQuietlyTrait
     /**
      * Update the model without firing any model events
      *
-     * @param array $attributes
-     * @param array $options
      *
      * @return mixed
      */

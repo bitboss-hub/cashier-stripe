@@ -19,7 +19,6 @@ class Coupon implements Arrayable, Jsonable, JsonSerializable
     /**
      * Create a new Coupon instance.
      *
-     * @param  \Stripe\Coupon  $coupon
      * @return void
      */
     public function __construct(StripeCoupon $coupon)

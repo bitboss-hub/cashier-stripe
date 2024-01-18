@@ -2,7 +2,13 @@
 
 namespace BitbossHub\Cashier\Http\Controllers;
 
+use BitbossHub\Cashier\Cashier;
+use BitbossHub\Cashier\Events\WebhookHandled;
+use BitbossHub\Cashier\Events\WebhookReceived;
+use BitbossHub\Cashier\Http\Middleware\VerifyWebhookSignature;
 use BitbossHub\Cashier\Models\StripeData;
+use BitbossHub\Cashier\Payment;
+use BitbossHub\Cashier\Subscription;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
@@ -10,12 +16,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
-use BitbossHub\Cashier\Cashier;
-use BitbossHub\Cashier\Events\WebhookHandled;
-use BitbossHub\Cashier\Events\WebhookReceived;
-use BitbossHub\Cashier\Http\Middleware\VerifyWebhookSignature;
-use BitbossHub\Cashier\Payment;
-use BitbossHub\Cashier\Subscription;
 use Stripe\Stripe;
 use Stripe\Subscription as StripeSubscription;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +37,6 @@ class WebhookController extends Controller
     /**
      * Handle a Stripe webhook call.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handleWebhook(Request $request)
@@ -63,7 +62,6 @@ class WebhookController extends Controller
     /**
      * Handle customer subscription created.
      *
-     * @param  array  $payload
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function handleCustomerSubscriptionCreated(array $payload)
@@ -115,7 +113,6 @@ class WebhookController extends Controller
     /**
      * Determines the type that should be used when new subscriptions are created from the Stripe dashboard.
      *
-     * @param  array  $payload
      * @return string
      */
     protected function newSubscriptionType(array $payload)
@@ -126,7 +123,6 @@ class WebhookController extends Controller
     /**
      * Handle customer subscription updated.
      *
-     * @param  array  $payload
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function handleCustomerSubscriptionUpdated(array $payload)
@@ -211,7 +207,6 @@ class WebhookController extends Controller
     /**
      * Handle the cancellation of a customer subscription.
      *
-     * @param  array  $payload
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function handleCustomerSubscriptionDeleted(array $payload)
@@ -230,7 +225,6 @@ class WebhookController extends Controller
     /**
      * Handle customer updated.
      *
-     * @param  array  $payload
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function handleCustomerCreated(array $payload)
@@ -238,7 +232,7 @@ class WebhookController extends Controller
         $params = Arr::get($payload, 'data.object');
         $model = $this->getModelFromStripePayload($payload);
 
-        if ($model && !$model->hasStripeId()) {
+        if ($model && ! $model->hasStripeId()) {
             $model->createLocalStripeData($payload['data']['object']['id'], $params);
         }
 
@@ -249,26 +243,26 @@ class WebhookController extends Controller
     {
         $model_type = Arr::get($payload, 'data.object.metadata.model_type');
         $model_id = Arr::get($payload, 'data.object.metadata.model_id');
-        if (!empty($model_type) && !empty($model_id)) {
+        if (! empty($model_type) && ! empty($model_id)) {
             $model = $model_type::find($model_id);
             if ($model) {
                 return $model;
             }
         }
+
         return null;
     }
 
     /**
      * Handle customer updated.
      *
-     * @param  array  $payload
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function handleCustomerUpdated(array $payload)
     {
         $stripe_id = Arr::get($payload, 'data.object.id');
         $stripeData = StripeData::where('stripe_id', $stripe_id)->first();
-        if (!empty($stripeData)) {
+        if (! empty($stripeData)) {
             $stripeData->updateQuietly($payload['data']['object']);
         } else {
             $model = $this->getModelFromStripePayload($payload);
@@ -276,9 +270,9 @@ class WebhookController extends Controller
                 $model->createLocalStripeData($stripe_id, $payload['data']['object']);
             }
         }
-//        if ($user = $this->getModelByStripeId($payload['data']['object']['id'])) {
-//            $user->updateDefaultPaymentMethodFromStripe();
-//        }
+        //        if ($user = $this->getModelByStripeId($payload['data']['object']['id'])) {
+        //            $user->updateDefaultPaymentMethodFromStripe();
+        //        }
 
         return $this->successMethod();
     }
@@ -286,7 +280,6 @@ class WebhookController extends Controller
     /**
      * Handle deleted customer.
      *
-     * @param  array  $payload
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function handleCustomerDeleted(array $payload)
@@ -302,7 +295,6 @@ class WebhookController extends Controller
     /**
      * Handle payment method automatically updated by vendor.
      *
-     * @param  array  $payload
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function handlePaymentMethodAutomaticallyUpdated(array $payload)
@@ -317,7 +309,6 @@ class WebhookController extends Controller
     /**
      * Handle payment action required for invoice.
      *
-     * @param  array  $payload
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function handleInvoicePaymentActionRequired(array $payload)
@@ -356,6 +347,7 @@ class WebhookController extends Controller
     protected function getModelByStripeId($stripeId)
     {
         $stripeData = Cashier::findStripeData($stripeId);
+
         return $stripeData?->stripeable;
     }
 

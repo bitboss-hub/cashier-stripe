@@ -2,10 +2,10 @@
 
 namespace BitbossHub\Cashier;
 
+use BitbossHub\Cashier\Exceptions\InvalidPaymentMethod;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use JsonSerializable;
-use BitbossHub\Cashier\Exceptions\InvalidPaymentMethod;
 use LogicException;
 use Stripe\PaymentMethod as StripePaymentMethod;
 
@@ -29,7 +29,6 @@ class PaymentMethod implements Arrayable, Jsonable, JsonSerializable
      * Create a new PaymentMethod instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $owner
-     * @param  \Stripe\PaymentMethod  $paymentMethod
      * @return void
      *
      * @throws \BitbossHub\Cashier\Exceptions\InvalidPaymentMethod

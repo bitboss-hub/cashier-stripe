@@ -19,7 +19,7 @@ class StripeDataUpsertRule
             'email' => 'email|nullable|max:255',
             'metadata' => 'array|nullable',
             'name' => 'string|nullable|max:255',
-            'phone' => 'string|nullable|max:255'
+            'phone' => 'string|nullable|max:255',
         ];
     }
 }

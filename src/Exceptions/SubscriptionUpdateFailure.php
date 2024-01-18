@@ -2,15 +2,14 @@
 
 namespace BitbossHub\Cashier\Exceptions;
 
-use Exception;
 use BitbossHub\Cashier\Subscription;
+use Exception;
 
 class SubscriptionUpdateFailure extends Exception
 {
     /**
      * Create a new SubscriptionUpdateFailure instance.
      *
-     * @param  \BitbossHub\Cashier\Subscription  $subscription
      * @return static
      */
     public static function incompleteSubscription(Subscription $subscription)
@@ -23,7 +22,6 @@ class SubscriptionUpdateFailure extends Exception
     /**
      * Create a new SubscriptionUpdateFailure instance.
      *
-     * @param  \BitbossHub\Cashier\Subscription  $subscription
      * @param  string  $price
      * @return static
      */
@@ -37,7 +35,6 @@ class SubscriptionUpdateFailure extends Exception
     /**
      * Create a new SubscriptionUpdateFailure instance.
      *
-     * @param  \BitbossHub\Cashier\Subscription  $subscription
      * @return static
      */
     public static function cannotDeleteLastPrice(Subscription $subscription)

@@ -4,5 +4,5 @@ namespace BitbossHub\Cashier\Enums;
 
 enum GatewaysEnum: string
 {
-  case STRIPE = 'stripe';
+    case STRIPE = 'stripe';
 }

@@ -2,13 +2,6 @@
 
 namespace BitbossHub\Cashier;
 
-use Carbon\Carbon;
-use Carbon\CarbonInterface;
-use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-use InvalidArgumentException;
 use BitbossHub\Cashier\Concerns\AllowsCoupons;
 use BitbossHub\Cashier\Concerns\HandlesPaymentFailures;
 use BitbossHub\Cashier\Concerns\InteractsWithPaymentBehavior;
@@ -16,6 +9,13 @@ use BitbossHub\Cashier\Concerns\Prorates;
 use BitbossHub\Cashier\Database\Factories\SubscriptionFactory;
 use BitbossHub\Cashier\Exceptions\IncompletePayment;
 use BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
+use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use InvalidArgumentException;
 use LogicException;
 use Stripe\Subscription as StripeSubscription;
 
@@ -559,7 +559,6 @@ class Subscription extends Model
     /**
      * Get the usage records for a metered product.
      *
-     * @param  array  $options
      * @param  string|null  $price
      * @return \Illuminate\Support\Collection
      */
@@ -576,7 +575,6 @@ class Subscription extends Model
      * Get the usage records for a specific price of a metered product.
      *
      * @param  string  $price
-     * @param  array  $options
      * @return \Illuminate\Support\Collection
      */
     public function usageRecordsFor($price, array $options = [])
@@ -641,7 +639,6 @@ class Subscription extends Model
     /**
      * Extend an existing subscription's trial period.
      *
-     * @param  \Carbon\CarbonInterface  $date
      * @return $this
      */
     public function extendTrial(CarbonInterface $date)
@@ -666,7 +663,6 @@ class Subscription extends Model
      * Swap the subscription to new Stripe prices.
      *
      * @param  string|array  $prices
-     * @param  array  $options
      * @return $this
      *
      * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
@@ -727,7 +723,6 @@ class Subscription extends Model
      * Swap the subscription to new Stripe prices, and invoice immediately.
      *
      * @param  string|array  $prices
-     * @param  array  $options
      * @return $this
      *
      * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
@@ -743,7 +738,6 @@ class Subscription extends Model
     /**
      * Parse the given prices for a swap operation.
      *
-     * @param  array  $prices
      * @return \Illuminate\Support\Collection
      */
     protected function parseSwapPrices(array $prices)
@@ -774,7 +768,6 @@ class Subscription extends Model
     /**
      * Merge the items that should be deleted during swap into the given items collection.
      *
-     * @param  \Illuminate\Support\Collection  $items
      * @return \Illuminate\Support\Collection
      */
     protected function mergeItemsThatShouldBeDeletedDuringSwap(Collection $items)
@@ -800,8 +793,6 @@ class Subscription extends Model
     /**
      * Get the options array for a swap operation.
      *
-     * @param  \Illuminate\Support\Collection  $items
-     * @param  array  $options
      * @return array
      */
     protected function getSwapOptions(Collection $items, array $options = [])
@@ -836,7 +827,6 @@ class Subscription extends Model
      *
      * @param  string  $price
      * @param  int|null  $quantity
-     * @param  array  $options
      * @return $this
      *
      * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
@@ -891,7 +881,6 @@ class Subscription extends Model
      *
      * @param  string  $price
      * @param  int  $quantity
-     * @param  array  $options
      * @return $this
      *
      * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
@@ -908,7 +897,6 @@ class Subscription extends Model
      * Add a new Stripe metered price to the subscription.
      *
      * @param  string  $price
-     * @param  array  $options
      * @return $this
      *
      * @throws \BitbossHub\Cashier\Exceptions\SubscriptionUpdateFailure
@@ -922,7 +910,6 @@ class Subscription extends Model
      * Add a new Stripe metered price to the subscription, and invoice immediately.
      *
      * @param  string  $price
-     * @param  array  $options
      * @return $this
      *
      * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
@@ -1115,7 +1102,6 @@ class Subscription extends Model
     /**
      * Invoice the subscription outside of the regular billing cycle.
      *
-     * @param  array  $options
      * @return \BitbossHub\Cashier\Invoice
      *
      * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
@@ -1151,7 +1137,6 @@ class Subscription extends Model
     /**
      * Fetches upcoming invoice for this subscription.
      *
-     * @param  array  $options
      * @return \BitbossHub\Cashier\Invoice|null
      */
     public function upcomingInvoice(array $options = [])
@@ -1169,7 +1154,6 @@ class Subscription extends Model
      * Preview the upcoming invoice with new Stripe prices.
      *
      * @param  string|array  $prices
-     * @param  array  $options
      * @return \BitbossHub\Cashier\Invoice|null
      */
     public function previewInvoice($prices, array $options = [])
@@ -1218,7 +1202,6 @@ class Subscription extends Model
     /**
      * Get an array of the subscription's invoices, including pending invoices.
      *
-     * @param  array  $parameters
      * @return \Illuminate\Support\Collection|\BitbossHub\Cashier\Invoice[]
      */
     public function invoicesIncludingPending(array $parameters = [])
@@ -1358,7 +1341,6 @@ class Subscription extends Model
     /**
      * Update the underlying Stripe subscription information for the model.
      *
-     * @param  array  $options
      * @return \Stripe\Subscription
      */
     public function updateStripeSubscription(array $options = [])
@@ -1371,7 +1353,6 @@ class Subscription extends Model
     /**
      * Get the subscription as a Stripe subscription object.
      *
-     * @param  array  $expand
      * @return \Stripe\Subscription
      */
     public function asStripeSubscription(array $expand = [])

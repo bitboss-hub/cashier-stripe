@@ -2,9 +2,9 @@
 
 namespace BitbossHub\Cashier;
 
-use Illuminate\Support\Collection;
 use BitbossHub\Cashier\Concerns\AllowsCoupons;
 use BitbossHub\Cashier\Concerns\HandlesTaxes;
+use Illuminate\Support\Collection;
 
 class CheckoutBuilder
 {
@@ -58,8 +58,6 @@ class CheckoutBuilder
      * Create a new checkout session.
      *
      * @param  array|string  $items
-     * @param  array  $sessionOptions
-     * @param  array  $customerOptions
      * @return \BitbossHub\Cashier\Checkout
      */
     public function create($items, array $sessionOptions = [], array $customerOptions = [])

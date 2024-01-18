@@ -2,6 +2,11 @@
 
 namespace BitbossHub\Cashier;
 
+use BitbossHub\Cashier\Concerns\AllowsCoupons;
+use BitbossHub\Cashier\Concerns\HandlesPaymentFailures;
+use BitbossHub\Cashier\Concerns\HandlesTaxes;
+use BitbossHub\Cashier\Concerns\InteractsWithPaymentBehavior;
+use BitbossHub\Cashier\Concerns\Prorates;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Exception;
@@ -9,11 +14,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\Conditionable;
 use InvalidArgumentException;
-use BitbossHub\Cashier\Concerns\AllowsCoupons;
-use BitbossHub\Cashier\Concerns\HandlesPaymentFailures;
-use BitbossHub\Cashier\Concerns\HandlesTaxes;
-use BitbossHub\Cashier\Concerns\InteractsWithPaymentBehavior;
-use BitbossHub\Cashier\Concerns\Prorates;
 use Stripe\Subscription as StripeSubscription;
 
 class SubscriptionBuilder
@@ -224,8 +224,6 @@ class SubscriptionBuilder
     /**
      * Add a new Stripe subscription to the Stripe model.
      *
-     * @param  array  $customerOptions
-     * @param  array  $subscriptionOptions
      * @return \BitbossHub\Cashier\Subscription
      *
      * @throws \BitbossHub\Cashier\Exceptions\IncompletePayment
@@ -239,8 +237,6 @@ class SubscriptionBuilder
      * Create a new Stripe subscription.
      *
      * @param  \Stripe\PaymentMethod|string|null  $paymentMethod
-     * @param  array  $customerOptions
-     * @param  array  $subscriptionOptions
      * @return \BitbossHub\Cashier\Subscription
      *
      * @throws \Exception
@@ -270,8 +266,6 @@ class SubscriptionBuilder
     /**
      * Create a new Stripe subscription and send an invoice to the customer.
      *
-     * @param  array  $customerOptions
-     * @param  array  $subscriptionOptions
      * @return \BitbossHub\Cashier\Subscription
      *
      * @throws \Exception
@@ -289,7 +283,6 @@ class SubscriptionBuilder
     /**
      * Create the Eloquent Subscription.
      *
-     * @param  \Stripe\Subscription  $stripeSubscription
      * @return \BitbossHub\Cashier\Subscription
      */
     protected function createSubscription(StripeSubscription $stripeSubscription)
@@ -329,8 +322,6 @@ class SubscriptionBuilder
     /**
      * Begin a new Checkout Session.
      *
-     * @param  array  $sessionOptions
-     * @param  array  $customerOptions
      * @return \BitbossHub\Cashier\Checkout
      */
     public function checkout(array $sessionOptions = [], array $customerOptions = [])
@@ -372,7 +363,6 @@ class SubscriptionBuilder
      * Get the Stripe customer instance for the current user and payment method.
      *
      * @param  \Stripe\PaymentMethod|string|null  $paymentMethod
-     * @param  array  $options
      * @return \Stripe\Customer
      */
     protected function getStripeCustomer($paymentMethod = null, array $options = [])
