@@ -2,6 +2,7 @@
 
 namespace BitbossHub\Cashier\Http\Controllers;
 
+use App\Models\User;
 use BitbossHub\Cashier\Cashier;
 use BitbossHub\Cashier\Http\Middleware\VerifyRedirectUrl;
 use BitbossHub\Cashier\Payment;
@@ -49,6 +50,20 @@ class PaymentController extends Controller
                 : '',
             'customer' => $payment->customer(),
             'redirect' => url(request('redirect', '/')),
+        ]);
+    }
+
+    public function setup(User $user)
+    {
+        return view('cashier::update-payment-method', [
+            'intent' => $user->createSetupIntent([
+                'metadata' => [
+                    'model_type' => get_class($user),
+                    'model_id' => $user->id
+                ]
+            ]),
+            'stripe_key' => config('cashier.key'),
+            'user' => $user
         ]);
     }
 }

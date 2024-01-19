@@ -17,7 +17,7 @@ trait Billable
     //    use HandlesTaxes;
     use ManagesStripeCustomer;
     //    use ManagesInvoices;
-    //    use ManagesPaymentMethods;
+    use ManagesPaymentMethods;
     //    use ManagesSubscriptions;
     //    use PerformsCharges;
 }

@@ -5,7 +5,7 @@ namespace BitbossHub\Cashier;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use JsonSerializable;
-use Stripe\Coupon as StripeCoupon;
+use Stripe\Coupon as StripeRemoteCoupon;
 
 class Coupon implements Arrayable, Jsonable, JsonSerializable
 {
@@ -21,7 +21,7 @@ class Coupon implements Arrayable, Jsonable, JsonSerializable
      *
      * @return void
      */
-    public function __construct(StripeCoupon $coupon)
+    public function __construct(StripeRemoteCoupon $coupon)
     {
         $this->coupon = $coupon;
     }

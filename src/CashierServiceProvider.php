@@ -23,7 +23,7 @@ class CashierServiceProvider extends ServiceProvider
     {
         //        $this->registerLogger();
         $this->registerRoutes();
-        //        $this->registerResources();
+        $this->registerResources();
         $this->registerPublishing();
         //        $this->registerCommands();
         $this->registerObservers();

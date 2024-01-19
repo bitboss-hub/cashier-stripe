@@ -19,7 +19,7 @@ trait ManagesPaymentMethods
     public function createSetupIntent(array $options = [])
     {
         if ($this->hasStripeId()) {
-            $options['customer'] = $this->stripe_id;
+            $options['customer'] = $this->stripeData->stripe_id;
         }
 
         return static::stripe()->setupIntents->create($options);
