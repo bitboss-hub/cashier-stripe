@@ -7,9 +7,9 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use JsonSerializable;
 use LogicException;
-use Stripe\PaymentMethod as StripePaymentMethod;
+use Stripe\PaymentMethod as StripePackagePaymentMethod;
 
-class PaymentMethod implements Arrayable, Jsonable, JsonSerializable
+class StripePaymentMethod implements Arrayable, Jsonable, JsonSerializable
 {
     /**
      * The Stripe model instance.
@@ -19,21 +19,21 @@ class PaymentMethod implements Arrayable, Jsonable, JsonSerializable
     protected $owner;
 
     /**
-     * The Stripe PaymentMethod instance.
+     * The Stripe StripePaymentMethod instance.
      *
      * @var \Stripe\PaymentMethod
      */
     protected $paymentMethod;
 
     /**
-     * Create a new PaymentMethod instance.
+     * Create a new StripePaymentMethod instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $owner
      * @return void
      *
      * @throws \BitbossHub\Cashier\Exceptions\InvalidPaymentMethod
      */
-    public function __construct($owner, StripePaymentMethod $paymentMethod)
+    public function __construct($owner, StripePackagePaymentMethod $paymentMethod)
     {
         if (is_null($paymentMethod->customer)) {
             throw new LogicException('The payment method is not attached to a customer.');
@@ -68,7 +68,7 @@ class PaymentMethod implements Arrayable, Jsonable, JsonSerializable
     }
 
     /**
-     * Get the Stripe PaymentMethod instance.
+     * Get the Stripe StripePaymentMethod instance.
      *
      * @return \Stripe\PaymentMethod
      */

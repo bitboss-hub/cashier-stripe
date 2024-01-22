@@ -2,15 +2,27 @@
 
 namespace BitbossHub\Cashier\Concerns;
 
-use BitbossHub\Cashier\PaymentMethod;
+use BitbossHub\Cashier\Models\PaymentMethod;
+use BitbossHub\Cashier\Models\StripeData;
+use BitbossHub\Cashier\StripePaymentMethod;
 use Exception;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
 use Stripe\BankAccount as StripeBankAccount;
 use Stripe\Card as StripeCard;
-use Stripe\PaymentMethod as StripePaymentMethod;
+use Stripe\PaymentMethod as StripePackagePaymentMethod;
 
 trait ManagesPaymentMethods
 {
+    /**
+     * Get the model's Stripe Data.
+     */
+    public function paymentMethods(): MorphToMany
+    {
+        return $this->morphToMany(PaymentMethod::class, 'stripeable');
+    }
+
     /**
      * Create a new SetupIntent instance.
      *
@@ -42,7 +54,7 @@ trait ManagesPaymentMethods
      */
     public function hasDefaultPaymentMethod()
     {
-        return (bool) $this->pm_type;
+        return (bool) $this->paymentMethods()->default()->count() > 1;
     }
 
     /**
@@ -53,7 +65,7 @@ trait ManagesPaymentMethods
      */
     public function hasPaymentMethod($type = null)
     {
-        return $this->paymentMethods($type)->isNotEmpty();
+        return $this->stripePaymentMethods($type)->isNotEmpty();
     }
 
     /**
@@ -61,9 +73,9 @@ trait ManagesPaymentMethods
      *
      * @param  string|null  $type
      * @param  array  $parameters
-     * @return \Illuminate\Support\Collection|\BitbossHub\Cashier\PaymentMethod[]
+     * @return \Illuminate\Support\Collection|\BitbossHub\Cashier\StripePaymentMethod[]
      */
-    public function paymentMethods($type = null, $parameters = [])
+    public function stripePaymentMethods($type = null, $parameters = [])
     {
         if (! $this->hasStripeId()) {
             return new Collection();
@@ -73,11 +85,11 @@ trait ManagesPaymentMethods
 
         // "type" is temporarily required by Stripe...
         $paymentMethods = static::stripe()->paymentMethods->all(
-            array_filter(['customer' => $this->stripe_id, 'type' => $type]) + $parameters
+            array_filter(['customer' => $this->stripeData?->stripe_id, 'type' => $type]) + $parameters
         );
 
         return Collection::make($paymentMethods->data)->map(function ($paymentMethod) {
-            return new PaymentMethod($this, $paymentMethod);
+            return new StripePaymentMethod($this, $paymentMethod);
         });
     }
 
@@ -85,7 +97,7 @@ trait ManagesPaymentMethods
      * Add a payment method to the customer.
      *
      * @param  \Stripe\PaymentMethod|string  $paymentMethod
-     * @return \BitbossHub\Cashier\PaymentMethod
+     * @return \BitbossHub\Cashier\StripePaymentMethod
      */
     public function addPaymentMethod($paymentMethod)
     {
@@ -95,11 +107,11 @@ trait ManagesPaymentMethods
 
         if ($stripePaymentMethod->customer !== $this->stripe_id) {
             $stripePaymentMethod = $stripePaymentMethod->attach(
-                ['customer' => $this->stripe_id]
+                ['customer' => $this->stripeData?->stripe_id]
             );
         }
 
-        return new PaymentMethod($this, $stripePaymentMethod);
+        return new StripePaymentMethod($this, $stripePaymentMethod);
     }
 
     /**
@@ -136,7 +148,7 @@ trait ManagesPaymentMethods
     /**
      * Get the default payment method for the customer.
      *
-     * @return \BitbossHub\Cashier\PaymentMethod|\Stripe\Card|\Stripe\BankAccount|null
+     * @return \BitbossHub\Cashier\StripePaymentMethod|\Stripe\Card|\Stripe\BankAccount|null
      */
     public function defaultPaymentMethod()
     {
@@ -148,7 +160,7 @@ trait ManagesPaymentMethods
         $customer = $this->asStripeCustomer(['default_source', 'invoice_settings.default_payment_method']);
 
         if ($customer->invoice_settings->default_payment_method) {
-            return new PaymentMethod($this, $customer->invoice_settings->default_payment_method);
+            return new StripePaymentMethod($this, $customer->invoice_settings->default_payment_method);
         }
 
         // If we can't find a payment method, try to return a legacy source...
@@ -159,7 +171,7 @@ trait ManagesPaymentMethods
      * Update customer's default payment method.
      *
      * @param  \Stripe\PaymentMethod|string  $paymentMethod
-     * @return \BitbossHub\Cashier\PaymentMethod
+     * @return \BitbossHub\Cashier\StripePaymentMethod
      */
     public function updateDefaultPaymentMethod($paymentMethod)
     {
@@ -202,7 +214,7 @@ trait ManagesPaymentMethods
         $defaultPaymentMethod = $this->defaultPaymentMethod();
 
         if ($defaultPaymentMethod) {
-            if ($defaultPaymentMethod instanceof PaymentMethod) {
+            if ($defaultPaymentMethod instanceof StripePaymentMethod) {
                 $this->fillPaymentMethodDetails(
                     $defaultPaymentMethod->asStripePaymentMethod()
                 )->save();
@@ -222,7 +234,7 @@ trait ManagesPaymentMethods
     /**
      * Fills the model's properties with the payment method from Stripe.
      *
-     * @param  \BitbossHub\Cashier\PaymentMethod|\Stripe\PaymentMethod|null  $paymentMethod
+     * @param  \BitbossHub\Cashier\StripePaymentMethod|\Stripe\PaymentMethod|null  $paymentMethod
      * @return $this
      */
     protected function fillPaymentMethodDetails($paymentMethod)
@@ -267,7 +279,7 @@ trait ManagesPaymentMethods
      */
     public function deletePaymentMethods($type = null)
     {
-        $this->paymentMethods($type)->each(function (PaymentMethod $paymentMethod) {
+        $this->paymentMethods($type)->each(function (StripePaymentMethod $paymentMethod) {
             $paymentMethod->delete();
         });
 
@@ -275,10 +287,10 @@ trait ManagesPaymentMethods
     }
 
     /**
-     * Find a PaymentMethod by ID.
+     * Find a StripePaymentMethod by ID.
      *
      * @param  string  $paymentMethod
-     * @return \BitbossHub\Cashier\PaymentMethod|null
+     * @return \BitbossHub\Cashier\StripePaymentMethod|null
      */
     public function findPaymentMethod($paymentMethod)
     {
@@ -290,11 +302,11 @@ trait ManagesPaymentMethods
             //
         }
 
-        return $stripePaymentMethod ? new PaymentMethod($this, $stripePaymentMethod) : null;
+        return $stripePaymentMethod ? new StripePaymentMethod($this, $stripePaymentMethod) : null;
     }
 
     /**
-     * Resolve a PaymentMethod ID to a Stripe PaymentMethod object.
+     * Resolve a StripePaymentMethod ID to a Stripe StripePaymentMethod object.
      *
      * @param  \Stripe\PaymentMethod|string  $paymentMethod
      * @return \Stripe\PaymentMethod

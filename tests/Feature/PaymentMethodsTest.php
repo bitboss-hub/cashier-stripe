@@ -2,7 +2,7 @@
 
 namespace BitbossHub\Cashier\Tests\Feature;
 
-use BitbossHub\Cashier\PaymentMethod;
+use BitbossHub\Cashier\StripePaymentMethod;
 use Stripe\Card as StripeCard;
 use Stripe\SetupIntent as StripeSetupIntent;
 
@@ -35,7 +35,7 @@ class PaymentMethodsTest extends FeatureTestCase
 
         $paymentMethod = $user->addPaymentMethod('pm_card_visa');
 
-        $this->assertInstanceOf(PaymentMethod::class, $paymentMethod);
+        $this->assertInstanceOf(StripePaymentMethod::class, $paymentMethod);
         $this->assertEquals('visa', $paymentMethod->card->brand);
         $this->assertEquals('4242', $paymentMethod->card->last4);
         $this->assertTrue($user->hasPaymentMethod());
@@ -60,7 +60,7 @@ class PaymentMethodsTest extends FeatureTestCase
 
         $paymentMethod = $user->updateDefaultPaymentMethod($paymentMethod);
 
-        $this->assertInstanceOf(PaymentMethod::class, $paymentMethod);
+        $this->assertInstanceOf(StripePaymentMethod::class, $paymentMethod);
         $this->assertEquals('sepa_debit', $user->pm_type);
         $this->assertEquals('7061', $user->pm_last_four);
         $this->assertEquals('sepa_debit', $paymentMethod->type);
@@ -113,14 +113,14 @@ class PaymentMethodsTest extends FeatureTestCase
 
         $paymentMethod = $user->updateDefaultPaymentMethod('pm_card_visa');
 
-        $this->assertInstanceOf(PaymentMethod::class, $paymentMethod);
+        $this->assertInstanceOf(StripePaymentMethod::class, $paymentMethod);
         $this->assertEquals('visa', $paymentMethod->card->brand);
         $this->assertEquals('4242', $paymentMethod->card->last4);
         $this->assertTrue($user->hasDefaultPaymentMethod());
 
         $paymentMethod = $user->defaultPaymentMethod();
 
-        $this->assertInstanceOf(PaymentMethod::class, $paymentMethod);
+        $this->assertInstanceOf(StripePaymentMethod::class, $paymentMethod);
         $this->assertEquals('visa', $paymentMethod->card->brand);
         $this->assertEquals('visa', $user->pm_type);
         $this->assertEquals('4242', $paymentMethod->card->last4);
@@ -195,7 +195,7 @@ class PaymentMethodsTest extends FeatureTestCase
         $paymentMethod = self::stripe()->paymentMethods->retrieve('pm_card_mastercard');
         $paymentMethod->attach(['customer' => $customer->id]);
 
-        $paymentMethods = $user->paymentMethods();
+        $paymentMethods = $user->stripePaymentMethods();
 
         $this->assertCount(2, $paymentMethods);
 
