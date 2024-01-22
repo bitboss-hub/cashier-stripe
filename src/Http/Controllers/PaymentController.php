@@ -52,18 +52,4 @@ class PaymentController extends Controller
             'redirect' => url(request('redirect', '/')),
         ]);
     }
-
-    public function setup(User $user)
-    {
-        return view('cashier::update-payment-method', [
-            'intent' => $user->createSetupIntent([
-                'metadata' => [
-                    'model_type' => get_class($user),
-                    'model_id' => $user->id
-                ]
-            ]),
-            'stripe_key' => config('cashier.key'),
-            'user' => $user
-        ]);
-    }
 }
