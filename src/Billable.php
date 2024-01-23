@@ -14,10 +14,11 @@ trait Billable
 {
     use HasInvoiceData;
 
-    //    use HandlesTaxes;
-    use ManagesStripeCustomer;
     //    use ManagesInvoices;
     use ManagesPaymentMethods;
+
+    //    use HandlesTaxes;
+    use ManagesStripeCustomer;
     //    use ManagesSubscriptions;
     //    use PerformsCharges;
 }

@@ -3,15 +3,12 @@
 namespace BitbossHub\Cashier\Concerns;
 
 use BitbossHub\Cashier\Models\PaymentMethod;
-use BitbossHub\Cashier\Models\StripeData;
 use BitbossHub\Cashier\StripePaymentMethod;
 use Exception;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
 use Stripe\BankAccount as StripeBankAccount;
 use Stripe\Card as StripeCard;
-use Stripe\PaymentMethod as StripePackagePaymentMethod;
 
 trait ManagesPaymentMethods
 {
@@ -21,6 +18,30 @@ trait ManagesPaymentMethods
     public function paymentMethods(): MorphToMany
     {
         return $this->morphToMany(PaymentMethod::class, 'stripeable');
+    }
+
+    public function createLocalPaymentMethod(array $data): PaymentMethod
+    {
+        $paymentMethod = new PaymentMethod($data);
+        $cus = $data['customer'];
+        //        if (array_key_exists('customer', $data)->hasStripeId()) {
+        //            $paymentMethod->customer_id = $this->stripeData->stripe_id;
+        //        }
+        $this->paymentMethods()->save($paymentMethod);
+
+        return $paymentMethod;
+    }
+
+    public function updateStripePaymentMethod(PaymentMethod $paymentMethod, array $data): PaymentMethod
+    {
+        $paymentMethod->update($data);
+
+        return $paymentMethod;
+    }
+
+    public function createStripePaymentMethod(array $options): PaymentMethod
+    {
+
     }
 
     /**

@@ -11,6 +11,10 @@ class WebhookCommand extends Command
         'customer.created',
         'customer.updated',
         'customer.deleted',
+        'payment_method.automatically_updated',
+        'payment_method.updated',
+        'payment_method.attached',
+        'payment_method.detached',
     ];
 
     //    public const DEFAULT_EVENTS = [

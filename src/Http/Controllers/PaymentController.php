@@ -2,7 +2,6 @@
 
 namespace BitbossHub\Cashier\Http\Controllers;
 
-use App\Models\User;
 use BitbossHub\Cashier\Cashier;
 use BitbossHub\Cashier\Http\Middleware\VerifyRedirectUrl;
 use BitbossHub\Cashier\Payment;

@@ -23,4 +23,10 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+
+    public function down(): void
+    {
+        $prefix = config('cashier.database.table_prefix');
+        Schema::dropIfExists("{$prefix}stripe_data");
+    }
 };

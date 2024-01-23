@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ __('Update Payment Method') }}
         - {{ config('app.name', 'BitbossHub') }}</title>
 
@@ -11,6 +11,8 @@
           rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
     <script src="https://js.stripe.com/v3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
 <body class="font-sans text-gray-600 bg-gray-100 leading-normal p-4 h-full">
 <div id="app" class="h-full md:flex md:justify-center md:items-center">
@@ -197,6 +199,7 @@
 
 <script>
     window.stripe = Stripe('{{ $stripe_key }}');
+    window.axios = axios;
 
     new Vue({
         el: '#app',
@@ -287,6 +290,10 @@
                             billing_details: {
                                 name: this.name,
                                 email: this.email
+                            },
+                            metadata: {
+                                model_type: '{!! str_replace("\\", "\\\\\\", get_class($user)) !!}',
+                                model_id: {{ $user->id }}
                             }
                         }
                     }
@@ -296,7 +303,16 @@
                     this.errorMessage = error;
                     // Display "error.message" to the user...
                 } else {
+                    console.log(setupIntent)
                     // The card has been verified successfully...
+                    const laravelToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    const headers = {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': laravelToken
+                    }
+                    window.axios.post('http://localhost:8000/stripe/payment-method/{{ $user->id }}', setupIntent, {
+                        headers: headers
+                    }).then(res => console.log(res))
                 }
                 this.loading = false;
             }

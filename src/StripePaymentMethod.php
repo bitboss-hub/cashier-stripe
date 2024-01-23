@@ -36,11 +36,11 @@ class StripePaymentMethod implements Arrayable, Jsonable, JsonSerializable
     public function __construct($owner, StripePackagePaymentMethod $paymentMethod)
     {
         if (is_null($paymentMethod->customer)) {
-            throw new LogicException('The payment method is not attached to a customer.');
+            //            throw new LogicException('The payment method is not attached to a customer.');
         }
 
         if ($owner->stripe_id !== $paymentMethod->customer) {
-            throw InvalidPaymentMethod::invalidOwner($paymentMethod, $owner);
+            //            throw InvalidPaymentMethod::invalidOwner($paymentMethod, $owner);
         }
 
         $this->owner = $owner;
